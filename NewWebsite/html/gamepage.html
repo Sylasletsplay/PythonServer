@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Game</title>
+    <meta name="description" content="Vampire survivors like bullet hell">
+    <meta name="author" content="Silas SINC apprentice">
+</head>
+<body>
+    <div id="gamePopover" popover>Start Game</div>
+    <div id="title" class="unselectable">Game</div>
+    <div class="gamespace">
+        <div id="statcolum">
+            <li class="statHead">
+                <h1>
+                    Playerstats
+                </h1>
+            </li>
+            <li class="stats" id="playerLevel">
+                Level: 
+            </li>
+            <li class="stats" id="damageNum">
+                Damage: 
+            </li>
+            <li class="stats" id="maxHealth">
+                Max Health:
+            </li>
+            <li class="stats" id="attackSpeed">
+                Attackspeed:
+            </li>
+            <li class="stats" id="step">
+                Movespeed:
+            </li>
+            <li class="stats" id="Money">
+                Currency:
+            </li>
+            <li class="stats" id="weapon">
+                Weapon: 
+            </li>
+        </div>
+        <div id="svgContainer">
+            <svg id="svgCanvas" viewBox="0 0 1000 1000">
+                <circle id="circle" cx="250" cy="250" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="purple" />
+                <line id="barrel" x1="0" y1="0" x2="0" y2="0" stroke="rgb(226, 43, 134)" stroke-width="5" fill="purple" />
+                <circle id="enemy_1" class="enemy_spawner" cx="10" cy="10" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+                <circle id="enemy_2" class="enemy_spawner" cx="500" cy="10" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+                <circle id="enemy_3" class="enemy_spawner" cx="990" cy="10" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+                <circle id="enemy_4" class="enemy_spawner" cx="10" cy="500" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+                <circle id="enemy_5" class="enemy_spawner" cx="990" cy="500" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+                <circle id="enemy_6" class="enemy_spawner" cx="10" cy="990" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+                <circle id="enemy_7" class="enemy_spawner" cx="500" cy="990" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+                <circle id="enemy_8" class="enemy_spawner" cx="990" cy="990" r="10" stroke="rgb(226, 43, 134)" stroke-width="2" fill="grey" display="none" />
+            </svg>
+        </div>
+        <div id="enemyStatscolum">
+            <li class="statHead">
+                <h1>
+                    Enemystats
+                </h1>
+            </li>
+            <li class="stats">
+                Damage: 
+            </li>
+        </div>
+        <div id="gameOver" class="unselectable" popover="manual">Game Over
+            <div style="display: flex; flex-direction: row; justify-content: center;">
+                <a href="bullethell" id="restart"><button id="restartButton">Play Again</button></a>
+                <a href="sylas_collection" id="exit"><button id="exitButton">Exit</button></a>
+            </div>
+            <div id="score_data">
+                <button id="sendPlayerDataButton">Save to scoreboard?</button>
+                <div id="playerName" style="background-color: black; color: aqua;"></div>
+            </div>
+            <button id="leaderRoute">Check Leaderboard</button>
+                
+        </div>
+        <div id="pauseMenu" class="unselectable" popover="manual">Paused<br>
+            Press u to resume
+        </div>
+        <div id="shop" class="unselectable" popover="manual">
+            <div id="shopHead">Options</div>
+            <div style="display: flex; flex-direction: row; justify-content: center;">
+                <div class="availableOptions">
+                    <div class="upgradeHead" id="option1_Name">+1 Damage</div>
+                    <div class="upgradeImg" id="option1_Upgrade">Insert huge image or svg here aaaaaaaaaaaaaaaaa<br><br><br><br><br><br><br><br></div>
+                    <div class="upgradeInfotext" id="option1_UpgradeInfo">More Boom</div>
+                    <div id="shopSlot1">Cost: 100 Currency</div>
+                </div>
+                <div class="availableOptions">
+                    <div class="upgradeHead" id="option2_Name">+3 Health</div>
+                    <div class="upgradeImg" id="option2_Upgrade">Insert huge image or svg here aaaaaaaaaaaaaaaaa<br><br><br><br><br><br><br><br></div>
+                    <div class="upgradeInfotext" id="option2_UpgradeInfo">bE MORE TANKY</div>
+                    <div id="shopSlot2">Cost: 100 Currency</div>
+                </div>
+                <div class="availableOptions">
+                    <div class="upgradeHead" id="option3_Name">+0.5 Speed</div>
+                    <div class="upgradeImg" id="option3_Upgrade">Insert huge image or svg here aaaaaaaaaaaaaaaaa<br><br><br><br><br><br><br><br></div>
+                    <div class="upgradeInfotext" id="option3_UpgradeInfo">Makes everything faster</div>
+                    <div id="shopSlot3">Cost: 500 Currency</div>
+                </div>
+            </div>
+            <div style="height: fit-content; width: fit-content;">
+                <div id="rerollBorder"></div>
+                <div>
+                    <button id="shopReroll">Reroll the shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="healthContainer">
+        <progress id="healthBar"
+            max=100
+            min=0
+            value=100>
+        </progress>
+    </div>
+    <audio id="playerHit">
+        <source src="audio/PlayerHit.wav" type="audio/wav">
+    <audio>
+    <audio id="playerDeath">
+        <source src="audio/PlayerDeath.wav" type="audio/wav">
+    <audio>
+    <audio id="PlayerShot1">
+        <source src="audio/PlayerShot1.wav" type="audio/wav">
+    <audio>
+    <audio id="PlayerShot2">
+        <source src="audio/PlayerShot2.wav" type="audio/wav">
+    <audio>
+    <audio id="PlayerShot3">
+        <source src="audio/PlayerShot3.wav" type="audio/wav">
+    <audio>
+    <audio id="PlayerShot4">
+        <source src="audio/PlayerShot4.wav" type="audio/wav">
+    <audio>
+    <audio id="PlayerShot5">
+        <source src="audio/PlayerShot5.wav" type="audio/wav">
+    <audio>
+    <audio id="EnemyShot1">
+        <source src="audio/EnemyShot1.wav" type="audio/wav">
+    <audio>
+    <audio id="EnemyShot2">
+        <source src="audio/EnemyShot2.wav" type="audio/wav">
+    <audio>
+    <audio id="EnemyShot3">
+        <source src="audio/EnemyShot3.wav" type="audio/wav">
+    <audio>
+    <audio id="RerollAudio">
+        <source src="audio/Reroll.wav" type="audio/wav">
+    <audio>
+    <script type="text/javascript" src="js/gamescript.js"></script>
+</body>
+</html>

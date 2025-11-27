@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="js/scorehandel.js"></script>
+    <title>Leaderboard</title>
+</head>
+<body style="background-color: black; color: rgb(142, 216, 45); display: flex; flex-direction: column; align-items: center;">
+    <h1 style="font-family: monospace; font-size: 3vw;">TOP 10</h1>
+    <div id="score10List"></div>
+    <table style="border: 1px solid; border-color: rgb(142, 216, 45); padding: 0.5vw;">
+        <tr>
+            <th style="font-family: monospace; font-size: 2vw; padding: 0.25vw;"><b>Player</b></th>
+            <th style="font-family: monospace; font-size: 2vw; padding: 0.25vw;"><b>Score</b></th>
+            <th style="font-family: monospace; font-size: 2vw; padding: 0.25vw;"><b>Time</b></th>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user1">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score1"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time1"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user2">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score2"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time2"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user3">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score3"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time3"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user4">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score4"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time4"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user5">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score5"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time5"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user6">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score6"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time6"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user7">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score7"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time7"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user8">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score8"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time8"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user9">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score9"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time9"></td>
+        </tr>
+        <tr class="scoreColumn">
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="user10">----------</td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45);"id="score10"></td>
+            <td style="font-family: monospace; font-size: 2vw; padding: 0.25vw; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-color: rgb(142, 216, 45); border-right: 1px solid;"id="time10"></td>
+        </tr>
+    </table>
+    <button onclick="goback()" style="cursor: pointer; background-color: rgb(142, 216, 45); margin-top: 2vh; border-radius: 10px; border: none; color: black; width: 3.5vw; height: 1.125vw; font-size: 1.4vh;">Close</button>
+    <script>
+        function goback() {
+            close();
+        }
+    </script>
+</body>
+</html>

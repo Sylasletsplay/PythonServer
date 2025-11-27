@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Account</title>
+</head>
+<body>
+    <div class="center">
+    <div class="loginWrapper">
+        <p style="font-size: 3vh; margin-bottom: 7vh; color: aliceblue;">Log In or Create Account</p>
+        <div id="loginDiv">
+            <div class="infoWrapper">Username</div>
+            <input id="UsernameInput" type="text" placeholder="Enter Username" maxlength="15">
+            <div class="infoWrapper">Password</div>
+            <div style="display: flex; flex-direction: row;"><input id="PasswordInput" type="password" placeholder="Enter Password" maxlength="20"><div id="passwordHide">Show</div></div>
+            
+        </div>
+        <div style="display: flex; flex-direction: row; width: inherit; justify-content: center;">
+            <div class="accountButtons" id="login">Login</div><div class="accountButtons" id="create">Create</div>
+        </div>
+        <div id="loginstate"></div>
+        <div class="accountButtons" id='Logout'>Logout</div>
+        <div class="accountButtons" id='closeSite' onclick="closeWindow()" style="margin-top: 2vh;">Leave Site</div>
+        
+    </div>
+    </div>
+    <script>function closeWindow() {close();}</script>
+    <script src="js/accountPage.js"></script>
+    <script src="js/userScript.js"></script>
+</body>
+</html>
