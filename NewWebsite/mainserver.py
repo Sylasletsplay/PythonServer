@@ -14,8 +14,8 @@ SERVER_PORT = 8443  # Using 8443 for HTTPS
 
 # Locate the certificate files relative to this script
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CERT_FILE = 'C:\PythonServerCertKey\server.cert'
-KEY_FILE = 'C:\PythonServerCertKey\server.key'
+CERT_FILE = os.path.join(BASE_DIR, 'server.cert')
+KEY_FILE = os.path.join(BASE_DIR, 'server.key')
 
 # --- 1. SETUP SSL CONTEXT ---
 try:
