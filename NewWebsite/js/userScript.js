@@ -46,7 +46,7 @@ function checkCredentials(objective) {
     passwordElement.value = '';
     fetch("/submitCredentials", {
         method: "POST",
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
             username: username,
             password: password,
@@ -66,34 +66,8 @@ function checkCredentials(objective) {
         const message = data.message;
         document.getElementById('loginstate').innerHTML = message;
         console.log('Message: '+message);
-        if (message == 'Credentials Valid!') {
-            getToken();
-        }
     })
     .catch((fetchError) => {
         console.error('There was a problem with the fetch operation: ', fetchError);
     });
-}
-function getToken() {
-    fetch('/getLoginToken', {
-        method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify({
-            username: username
-        }),
-        headers: {
-            "Content-Type": "application/json; charset=UTF-8"
-        }
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        else {
-            document.getElementById('loginstate').innerHTML = 'Logged in!';
-        }
-    })
-    .catch((fetchError) => {
-        console.error('There was a problem with the fetch operation: ', fetchError);
-    })
 }
