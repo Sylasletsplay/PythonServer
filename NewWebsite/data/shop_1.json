@@ -1,0 +1,17 @@
+{
+    "tier1": [
+        {"Stats": []},
+        {"Items": []},
+        {"Weapons": []}
+    ],
+    "tier2": [
+        {"Stats": []},
+        {"Items": []},
+        {"Weapons": []}
+    ],
+    "tier3": [
+        {"Stats": []},
+        {"Items": []},
+        {"Weapons": []}
+    ]
+}

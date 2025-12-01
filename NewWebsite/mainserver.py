@@ -7,6 +7,7 @@ import bcrypt
 import hmac
 import hashlib
 import datetime
+import shop_logic
 
 # --- CONFIGURATION ---
 SERVER_HOST = '0.0.0.0'
@@ -302,9 +303,7 @@ def handle_client(secure_socket):
 
             elif path == '/Logout':
                 try:
-                    print('Starting Logout')
                     auth_token = get_cookie_value(headers_list, "auth_token")
-                    print(auth_token)
                     if auth_token == None:
                         response_data = {'message': 'User not logged in!'}
                         response_body = json.dumps(response_data).encode('utf-8')
@@ -326,7 +325,21 @@ def handle_client(secure_socket):
                 except Exception as e:
                     print(f"Login Verify Error: {e}")
                     secure_socket.sendall(b"HTTP/1.1 500 Server Error\r\n\r\n")
-
+            elif path == '/getShop':
+                try:
+                    shop = shop_logic.get_shop()
+                    print(shop)
+                    response_body = json.dumps(shop).encode('utf-8')
+                    header = "HTTP/1.1 200 OK\r\n" \
+                                    "Content-Type: application/json\r\n" \
+                                    f"Content-Length: {len(response_body)}\r\n" \
+                                    "\r\n"
+                    secure_socket.sendall(header.encode('utf-8') + response_body)
+                                    
+                except Exception as e:
+                    print(f"SHOP Error: {e}")
+                    secure_socket.sendall(b"HTTP/1.1 500 Server Error\r\n\r\n")
+                
             secure_socket.close()
             return
 

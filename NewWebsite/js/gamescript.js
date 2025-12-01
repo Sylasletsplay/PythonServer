@@ -161,6 +161,7 @@ var enemyProjectiles = [
 ];
 
 var pausedTime = 0;
+var e_death_t = 0;
 
 window.addEventListener('keydown', function(event) {
     keysPressed[event.key] = true;
@@ -177,35 +178,6 @@ document.getElementById('sendPlayerDataButton').addEventListener('click', functi
 document.getElementById('leaderRoute').addEventListener('click', function(event) {
     window.open('Leaderboard');
 });
-/*
----- Idea for calculation of Propability ----
-have each kind of 'shopobject' roll for a random number
-the lower the chance of rolling the lower the highest number able to roll is
-1. Each object type rolls for the general propability and the highest num wins.
-2. Do the same for the tier of the type -> example: 5 rarities -> highest amount of health buyable is 5 lowest is 1, amount depends on tier; Weapons are categorised in different tiers, just average rarity system from that point on
-3. Just choose a random number in range of the list of acceptable items
-
-Different shop slots can have different propabilities of certain objects or object types
-Left: More Stat upgrades -> More affordable; Middle: More Items/Trinkets -> normal Pricing; Right: More Wepons -> higher Pricing; 
-<----->
-Pricing applies to the shop slot in general and is not determined by the item directly -> Lucky to get Weapon in the left slot -> it's cheaper if you do
-Not all shop slots are always open (unless certain item) 
--> Left is always open (or a 5% chance to close) 
---> Middle is open/closed in rythym (or 30% chance to close) 
----> Right is open every 3 rounds (or has a 50% chance to close) (Idk what system is better) 
-*/
-
-
-
-const shopOptions1_1 = [];
-const shopOptions2_1 = [];
-const shopOptions3_1 = [];
-// Comes into play when leveling up -> Just expanded Shop pools -> should me dynamic -> Depending on level and type of trinkets bought
-const shopOptions1_2 = [];
-const shopOptions2_2 = [];
-const shopOptions3_2 = [];
-
-
 
 // shop
 document.getElementById('shopReroll').addEventListener('click', function(event) {
@@ -226,6 +198,7 @@ function rerollShop() {
     if (audio) {
         audio.play();
     }
+    get_shop();
 }
 
 function buyShop(shopslot) {
@@ -289,12 +262,30 @@ function gamePause() {
     }
 }
 
+function get_shop() {
+    fetch("/getShop", {
+        method: 'POST'
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log(data);
+    })
+    .catch(error => console.error('Failed to fetch data:', error));
+}
+
 function gameLoop() {
     if (keysPressed['i']) {
+        
         inShop = true;
         pausedTime = Date.now();
         updatePlayerStats();
         requestAnimationFrame(gamePause);
+        get_shop();
         return;
     }
 
@@ -308,7 +299,8 @@ function gameLoop() {
     if (initialTime == undefined) {
         initialTime = Date.now();
     }
-    if (compare_arrays(usedSpawnerPos, fullSpawnerPos) != true && lastSpawnTime + spawnDelay < Date.now()) {
+    if (compare_arrays(usedSpawnerPos, fullSpawnerPos) != true && pausedTime + lastSpawnTime + spawnDelay < Date.now()) {
+        pausedTime = 0;
         spawnEnemy();
         renderEnemy();
         lastSpawnTime = Date.now();
@@ -432,6 +424,7 @@ function gameLoop() {
                             document.getElementById("enemy_" + (y + 1)).style.display = "none";
                             usedSpawnerPos[y] = 0; // Free up the spawner
                             money += Math.floor(enemy.drop);
+                            e_death_t = Date.now();
                         }
 
                         projectileHit = true; // Mark the projectile to be removed.
