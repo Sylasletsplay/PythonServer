@@ -38,6 +38,13 @@ def read_file(file_path):
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
+def write_file(file_path):
+    try:
+        with open(file_path, 'w') as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
 def write_scores_file(file_path, scores):
     sorted_scores = sorted(scores, key=lambda x: x['score'], reverse=True)
     with open(file_path, 'w') as file:
@@ -110,7 +117,7 @@ def update_users(username, password_input, objective):
         users.append(new_entry)
         with open(user_file_path, 'w') as file:
             json.dump(users, file, indent=4)
-        credentialCheck = [False, False] 
+        credentialCheck = [False, False]
 
     return credentialCheck
 
@@ -201,9 +208,24 @@ def handle_client(secure_socket):
                     if objective == 'login':
                         if return_value[0]:
                             if return_value[1]:
-                                response_body = json.dumps({"status": "success", "message": "Credentials Valid!"}).encode()
-                                header = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n" \
-                                    f"Content-Length: {len(response_body)}\r\n\r\n"
+                                user_file_path = os.path.join(BASE_DIR, 'data', 'users.json')
+                                for entry in read_file(user_file_path):
+                                    if entry['username'] == username:
+                                        uniqueid = entry['unique_id']
+                                        break
+                                
+                                # Just create it and send it
+                                safe_token = create_signed_id(uniqueid)
+                                
+                                response_body = json.dumps({"status": "success", "message": "Logged in!"}).encode('utf-8')
+                                
+                                header = "HTTP/1.1 200 OK\r\n" \
+                                        "Content-Type: application/json\r\n" \
+                                        f"Content-Length: {len(response_body)}\r\n" \
+                                        f"Set-Cookie: auth_token={safe_token}; Path=/; HttpOnly; Secure\r\n" \
+                                        "\r\n"
+                                        
+                                secure_socket.sendall(header.encode('utf-8') + response_body)
                             else:
                                 response_body = json.dumps({"status": "failure", "message": "Wrong password!"}).encode()
                                 header = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n" \
@@ -221,41 +243,6 @@ def handle_client(secure_socket):
                         header = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n" \
                                 f"Content-Length: {len(response_body)}\r\n\r\n"
                     secure_socket.sendall(header.encode() + response_body)
-                except Exception as e:
-                    print(f"POST Error: {e}")
-                    secure_socket.sendall(b"HTTP/1.1 500 Internal Server Error\r\n\r\n")
-            elif path == '/getLoginToken':
-                try:
-                    user_found=False
-                    post_data = json.loads(body)
-                    print(f'Received POST data: {post_data}')
-                    username = post_data.get('username')
-                    file = read_file(os.path.join(BASE_DIR, 'data', 'users.json'))
-                    for entry in file:
-                        if entry['username'] == username:
-                            user_found = True
-                            uniqueid = entry['unique_id']
-                            
-                            # Just create it and send it
-                            safe_token = create_signed_id(uniqueid)
-                            
-                            response_body = json.dumps({"status": "success", "message": "Logged in!"}).encode('utf-8')
-                            
-                            header = "HTTP/1.1 200 OK\r\n" \
-                                    "Content-Type: application/json\r\n" \
-                                    f"Content-Length: {len(response_body)}\r\n" \
-                                    f"Set-Cookie: auth_token={safe_token}; Path=/; HttpOnly; Secure\r\n" \
-                                    "\r\n"
-                                    
-                            secure_socket.sendall(header.encode('utf-8') + response_body)
-                            break
-                    if not user_found:
-                        print(f"User {username} not found")
-                        error_body = json.dumps({"status": "error", "message": "User not found"}).encode('utf-8')
-                        header = "HTTP/1.1 401 Unauthorized\r\n" \
-                                "Content-Type: application/json\r\n" \
-                                f"Content-Length: {len(error_body)}\r\n\r\n"
-                        secure_socket.sendall(header.encode('utf-8') + error_body)
                 except Exception as e:
                     print(f"POST Error: {e}")
                     secure_socket.sendall(b"HTTP/1.1 500 Internal Server Error\r\n\r\n")

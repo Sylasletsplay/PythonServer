@@ -518,7 +518,7 @@ function savePlayerScore() {
         console.log(Username);
         fetch("/submitScore", {
         method: "POST",
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
             username: Username,
             score: score,
