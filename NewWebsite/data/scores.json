@@ -3,10 +3,13 @@
         "username": "HSK Sylas",
         "score": 1350,
         "time": 61.317
+<<<<<<< HEAD
     },
     {
         "username": "Der Silas",
         "score": 300,
         "time": 25.324
+=======
+>>>>>>> 7ddbdc0e7d3b28e3226f01d2d00179fbd4a4306a
     }
 ]
