@@ -1,15 +1,22 @@
 [
     {
         "username": "HSK Sylas",
+        "score": 2100,
+        "time": 73.887
+    },
+    {
+        "username": "HSK Sylas",
         "score": 1350,
         "time": 61.317
-<<<<<<< HEAD
+    },
+    {
+        "username": "Gast",
+        "score": 675,
+        "time": 29.645
     },
     {
         "username": "Der Silas",
         "score": 300,
         "time": 25.324
-=======
->>>>>>> 7ddbdc0e7d3b28e3226f01d2d00179fbd4a4306a
     }
 ]

@@ -1,15 +1,7 @@
 [
     {
         "username": "HSK Sylas",
-        "password_hash": "$2b$12$vwKfOiMXOuyN2GzKUWjDx.a7COomIAuY7168Y/o77zmVpEdixzy66",
-        "unique_id": "HSK Sylas691485"
-<<<<<<< HEAD
-    },
-    {
-        "username": "Der Silas",
-        "password_hash": "$2b$12$H1TwKqOQi2eyLrBTT.h2LuGY1XIkv4pIEPAB1n./YZ1jLPObzINHS",
-        "unique_id": "Der Silas262061"
-=======
->>>>>>> 7ddbdc0e7d3b28e3226f01d2d00179fbd4a4306a
+        "password_hash": "$2b$12$54TC/CeN2wKm9BOQrTFex.qoKszS4qVM2dWwQqQQ4hKGDsJoeXZ8S",
+        "unique_id": "HSK Sylas482531"
     }
 ]

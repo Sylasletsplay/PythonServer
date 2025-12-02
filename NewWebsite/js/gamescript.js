@@ -172,8 +172,9 @@ window.addEventListener('keyup', function(event) {
 });
 
 document.getElementById('sendPlayerDataButton').addEventListener('click', function(event) {
-    savePlayerScore();
+    document.getElementById('sendPlayerDataButton').style.display = 'none';
     document.getElementById('leaderRoute').style.display = 'block';
+    savePlayerScore();
 });
 document.getElementById('leaderRoute').addEventListener('click', function(event) {
     window.open('Leaderboard');
@@ -262,6 +263,16 @@ function gamePause() {
     }
 }
 
+function setColorfromTier(input, option) {
+    switch (input) {
+        case '1': document.getElementById(option).style.backgroundColor = '#7d7b74'; break;
+        case '2': document.getElementById(option).style.backgroundColor = '#4591a8'; break;
+        case '3': document.getElementById(option).style.backgroundColor = '#23ad2a'; break;
+        case '4': document.getElementById(option).style.backgroundColor = '#dba70b'; break;
+        case '5': document.getElementById(option).style.backgroundColor = '#e8391a'; break;
+    }
+}
+
 function get_shop() {
     fetch("/getShop", {
         method: 'POST'
@@ -273,7 +284,16 @@ function get_shop() {
         return response.json();
     })
     .then((data) => {
-        console.log(data);
+        document.getElementById('option1_Name').innerHTML = data.type_1;
+        document.getElementById('option2_Name').innerHTML = data.type_2;
+        document.getElementById('option3_Name').innerHTML = data.type_3;
+        document.getElementById('option1_UpgradeInfo').innerHTML = data.content_1;
+        document.getElementById('option2_UpgradeInfo').innerHTML = data.content_2;
+        document.getElementById('option3_UpgradeInfo').innerHTML = data.content_3;
+        setColorfromTier(data.tier_1, 'Options_1');
+        setColorfromTier(data.tier_2, 'Options_2');
+        setColorfromTier(data.tier_3, 'Options_3');
+
     })
     .catch(error => console.error('Failed to fetch data:', error));
 }
