@@ -3,5 +3,10 @@
         "username": "HSK Sylas",
         "password_hash": "$2b$12$vwKfOiMXOuyN2GzKUWjDx.a7COomIAuY7168Y/o77zmVpEdixzy66",
         "unique_id": "HSK Sylas691485"
+    },
+    {
+        "username": "Der Silas",
+        "password_hash": "$2b$12$H1TwKqOQi2eyLrBTT.h2LuGY1XIkv4pIEPAB1n./YZ1jLPObzINHS",
+        "unique_id": "Der Silas262061"
     }
 ]
