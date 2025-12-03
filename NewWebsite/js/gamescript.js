@@ -184,25 +184,28 @@ document.getElementById('leaderRoute').addEventListener('click', function(event)
 document.getElementById('shopReroll').addEventListener('click', function(event) {
     rerollShop();
 });
-document.getElementById('shopSlot1').addEventListener('click', function(event) {
-    buyShop("shopSlot1");
-});
-document.getElementById('shopSlot2').addEventListener('click', function(event) {
-    buyShop("shopSlot2");
-});
-document.getElementById('shopSlot3').addEventListener('click', function(event) {
-    buyShop("shopSlot3");
-});
+document.getElementById('shopSlot1').addEventListener('click', buyShop);
+document.getElementById('shopSlot2').addEventListener('click', buyShop);
+document.getElementById('shopSlot3').addEventListener('click', buyShop);
 
 function rerollShop() {
     let audio = document.getElementById("RerollAudio");
     if (audio) {
         audio.play();
     }
+    document.getElementById('shopSlot1').innerHTML = 'Cost: 100 Currency';
+    document.getElementById('shopSlot1').addEventListener('click',buyShop);
+    document.getElementById('shopSlot2').innerHTML = 'Cost: 100 Currency';
+    document.getElementById('shopSlot2').addEventListener('click',buyShop);
+    document.getElementById('shopSlot3').innerHTML = 'Cost: 500 Currency';
+    document.getElementById('shopSlot3').addEventListener('click',buyShop);
     get_shop();
 }
 
-function buyShop(shopslot) {
+function buyShop(event) {
+    let shopslot = event.currentTarget.id; 
+    let object = event.currentTarget;
+    console.log(object);
     if (shopslot == "shopSlot1" && money > price1) {
         money-=price1;
         price1+=50;
@@ -218,6 +221,9 @@ function buyShop(shopslot) {
         price3+=200;
         step+=0.5;
     }
+    console.log(shopslot)
+    object.innerHTML = 'Bought';
+    document.getElementById(shopslot).removeEventListener('click',buyShop);
 }
 
 var initialTime;
@@ -300,8 +306,13 @@ function get_shop() {
 
 function gameLoop() {
     if (keysPressed['i']) {
-        
         inShop = true;
+        document.getElementById('shopSlot1').innerHTML = 'Cost: 100 Currency';
+        document.getElementById('shopSlot1').addEventListener('click',buyShop);
+        document.getElementById('shopSlot2').innerHTML = 'Cost: 100 Currency';
+        document.getElementById('shopSlot2').addEventListener('click',buyShop);
+        document.getElementById('shopSlot3').innerHTML = 'Cost: 500 Currency';
+        document.getElementById('shopSlot3').addEventListener('click',buyShop);
         pausedTime = Date.now();
         updatePlayerStats();
         requestAnimationFrame(gamePause);
