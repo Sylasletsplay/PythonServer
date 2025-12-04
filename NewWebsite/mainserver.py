@@ -18,13 +18,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CERT_FILE = os.path.join(BASE_DIR, 'server.cert')
 KEY_FILE = os.path.join(BASE_DIR, 'server.key')
 
-# --- 1. SETUP SSL CONTEXT ---
+# --- SETUP SSL CONTEXT ---
 try:
     SSL_CONTEXT = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     SSL_CONTEXT.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)
-    print(f"✅ SSL Context loaded. Cert: {CERT_FILE}")
+    print(f"SSL Context loaded. Cert: {CERT_FILE}")
 except FileNotFoundError:
-    print(f"❌ FATAL ERROR: Could not find {CERT_FILE} or {KEY_FILE}")
+    print(f"FATAL ERROR: Could not find {CERT_FILE} or {KEY_FILE}")
     exit()
 
 
@@ -123,13 +123,11 @@ def update_users(username, password_input, objective):
     return credentialCheck
 
 def get_cookie_value(request_data, cookie_name):
-    # 1. Check if input is a string or a list
     if isinstance(request_data, str):
-        lines = request_data.split('\r\n') # It's a string, so split it
+        lines = request_data.split('\r\n')
     else:
-        lines = request_data # It's already a list, use it as is
+        lines = request_data
 
-    # 2. Search for the cookie
     for line in lines:
         if line.startswith("Cookie:"):
             parts = line[7:].split(';')
@@ -140,7 +138,7 @@ def get_cookie_value(request_data, cookie_name):
                         return value.strip()
     return None
 
-# --- CLIENT HANDLER (Thread) ---
+# --- CLIENT HANDLER ---
 
 def handle_client(secure_socket):
     try:
@@ -165,7 +163,7 @@ def handle_client(secure_socket):
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # --- A. HANDLE POST (Submit Score) ---
+        # Post Handel
         if method == 'POST':
             content_length = 0
             for line in headers_list:
@@ -215,7 +213,6 @@ def handle_client(secure_socket):
                                         uniqueid = entry['unique_id']
                                         break
                                 
-                                # Just create it and send it
                                 safe_token = create_signed_id(uniqueid)
                                 
                                 response_body = json.dumps({"status": "success", "message": "Logged in!"}).encode('utf-8')
@@ -298,7 +295,6 @@ def handle_client(secure_socket):
 
                 except Exception as e:
                     print(f"Login Verify Error: {e}")
-                    # Send a generic 500 error if something crashes
                     secure_socket.sendall(b"HTTP/1.1 500 Server Error\r\n\r\n")
 
             elif path == '/Logout':
@@ -342,8 +338,7 @@ def handle_client(secure_socket):
                 
             secure_socket.close()
             return
-
-        # --- B. HANDLE GET (Your Custom Path Handling) ---
+        #Get handeling
         elif method == 'GET':
             file_path = None
             content_type = 'text/plain'
@@ -351,7 +346,6 @@ def handle_client(secure_socket):
             content_file = content_name[len(content_name)-1]
             print(content_file)
             
-            # --- YOUR SPECIFIC MAPPING RESTORED HERE ---
             #html
             if path == '/' or path == '/sylas_collection':
                 file_path = os.path.join(base_dir, 'html','index.html')
@@ -428,8 +422,8 @@ def start_server():
     server_socket.bind((SERVER_HOST, SERVER_PORT))
     server_socket.listen(5)
 
-    print(f'🔒 Secure Server listening on https://localhost:{SERVER_PORT} ...')
-    print(f'📂 Serving files from: {BASE_DIR}')
+    print(f'Secure Server listening on https://localhost:{SERVER_PORT} ...')
+    print(f'Serving files from: {BASE_DIR}')
 
     while True:
         try:

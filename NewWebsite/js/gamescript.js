@@ -193,11 +193,11 @@ function rerollShop() {
     if (audio) {
         audio.play();
     }
-    document.getElementById('shopSlot1').innerHTML = 'Cost: 100 Currency';
+    document.getElementById('shopSlot1').innerHTML = 'Cost: '+price1;
     document.getElementById('shopSlot1').addEventListener('click',buyShop);
-    document.getElementById('shopSlot2').innerHTML = 'Cost: 100 Currency';
+    document.getElementById('shopSlot2').innerHTML = 'Cost: '+price2;
     document.getElementById('shopSlot2').addEventListener('click',buyShop);
-    document.getElementById('shopSlot3').innerHTML = 'Cost: 500 Currency';
+    document.getElementById('shopSlot3').innerHTML = 'Cost: '+price3;
     document.getElementById('shopSlot3').addEventListener('click',buyShop);
     get_shop();
 }
@@ -210,6 +210,7 @@ function buyShop(event) {
         money-=price1;
         price1+=50;
         playerObject.baseDamage += 1;
+        console.log('Basedamege is:'+playerObject.baseDamage);
     }
     else if (shopslot == "shopSlot2" && money > price2) {
         money-=price2;
@@ -307,11 +308,11 @@ function get_shop() {
 function gameLoop() {
     if (keysPressed['i']) {
         inShop = true;
-        document.getElementById('shopSlot1').innerHTML = 'Cost: 100 Currency';
+        document.getElementById('shopSlot1').innerHTML = 'Cost: '+price1;
         document.getElementById('shopSlot1').addEventListener('click',buyShop);
-        document.getElementById('shopSlot2').innerHTML = 'Cost: 100 Currency';
+        document.getElementById('shopSlot2').innerHTML = 'Cost: '+price2;
         document.getElementById('shopSlot2').addEventListener('click',buyShop);
-        document.getElementById('shopSlot3').innerHTML = 'Cost: 500 Currency';
+        document.getElementById('shopSlot3').innerHTML = 'Cost: '+price3;
         document.getElementById('shopSlot3').addEventListener('click',buyShop);
         pausedTime = Date.now();
         updatePlayerStats();
@@ -515,6 +516,7 @@ function updateHealthBar() {
 
 function updatePlayerStats() {
     let damage = calculatePlayerAttributes();
+    console.log(damage);
     document.getElementById("playerLevel").innerHTML = "Level: "+playerObject.playerLevel;
     document.getElementById("damageNum").innerHTML = "Damage: " + damage[0];
     document.getElementById("maxHealth").innerHTML = "Max Health: " + playerObject.maxHitpointsPlayer;
