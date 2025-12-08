@@ -202,6 +202,18 @@ function rerollShop() {
     get_shop();
 }
 
+function getBought(slot,slotnum) {
+    upgrade_type = document.getElementById('option'+slotnum+'_Name').innerHTML;
+    upgrade = document.getElementById('option'+slotnum+'_UpgradeInfo').innerHTML;
+    slot1_typedocument = document.getElementById(slot).innerHTML
+    switch (upgrade) {
+        case 'damage': playerObject.baseDamage += 1; break;
+        case 'basic': playerObject.weapon = 'basic'; break;
+        case 'sniper': playerObject.weapon = 'sniper'; break;
+        case 'speed': step+=0.5; break;
+    }
+}
+
 function buyShop(event) {
     let shopslot = event.currentTarget.id; 
     let object = event.currentTarget;
@@ -209,20 +221,22 @@ function buyShop(event) {
     if (shopslot == "shopSlot1" && money > price1) {
         money-=price1;
         price1+=50;
-        playerObject.baseDamage += 1;
+        slotnum = 1;
         console.log('Basedamege is:'+playerObject.baseDamage);
     }
     else if (shopslot == "shopSlot2" && money > price2) {
         money-=price2;
         price2+= 50;
         playerObject.maxHitpointsPlayer +=3;
+        slotnum = 2;
     }
     else if (shopslot == "shopSlot3" && money > price3) {
         money-=price3;
         price3+=200;
-        step+=0.5;
+        slotnum = 3;
     }
-    console.log(shopslot)
+    getBought(shopslot,slotnum);
+    console.log(shopslot);
     object.innerHTML = 'Bought';
     document.getElementById(shopslot).removeEventListener('click',buyShop);
 }

@@ -18,5 +18,10 @@
         "username": "Der Silas",
         "score": 300,
         "time": 25.324
+    },
+    {
+        "username": "HSK Sylas",
+        "score": 100,
+        "time": 165.422
     }
 ]
