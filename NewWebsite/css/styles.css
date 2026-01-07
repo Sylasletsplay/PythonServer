@@ -327,6 +327,10 @@ progress::-webkit-progress-value {
     text-shadow: 0.2vh 0.2vh 0.5vh rgb(199, 0, 189);
     cursor: pointer;
 }
+#refresh_button:active {
+    color: rgb(135, 13, 186);
+    transition: 0ms;
+}
 #second_area {
     opacity: 0.6;
     display: flex;
@@ -784,5 +788,5 @@ progress::-webkit-progress-value {
 
 @font-face {
   font-family: Drifty;
-  src: url(fonts/DriftRaceDemo-4n6y6.ttf);
+  src: url(/fonts/DriftRaceDemo-4n6y6.ttf);
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <script type="text/javascript" src="js/script.js">event.preventDefault();</script>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Main</title>
@@ -16,6 +16,7 @@
         <button class="menu_button" popovertarget="menu_popover">Menu</button>
         <button class="menu_button" id="the_button" onclick="event.preventDefault();openSite('Leaderboard')">Leader</button>
         <button class="menu_button" id="accountButton" onclick="event.preventDefault();openSite('Account')">Account</button>
+        <button class="menu_button" id="content_Button" onclick="event.preventDefault();changeWindow('Dashboard')">Dashboard</button>
     </div>
     <div id="outer_body_1">
         <div class="container">
@@ -42,10 +43,8 @@
             <div id="cookie_window">
                 Want Cookies?
                     <?xml version="1.0" encoding="iso-8859-1"?>
-                    <!-- Whole cookie svg with Animations -->
-                    <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                    <svg height="5vh" width="5vh" version="1.1" id="cookie_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                        viewBox="0 0 416.991 416.991" xml:space="preserve">
+                <svg height="5vh" width="5vh" version="1.1" id="cookie_svg" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 416.991 416.991" xml:space="preserve">
                     <g>
                         <g>
                             <path style="fill:#D4B783;" d="M344.649,204.32c-7.807,3.62-16.314,5.501-25.067,5.503c-10.392,0.001-20.665-2.759-29.711-7.990

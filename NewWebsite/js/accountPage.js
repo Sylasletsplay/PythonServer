@@ -8,7 +8,7 @@ pwHide.addEventListener('click', function() {
 });
 
 function togglePassword() {
-    if (pwHide.innerHTML == 'Show') {
+    if (pwHide.innerHTML === 'Show') {
         pwHide.innerHTML = 'Hide';
         pwInput.type = 'text';
     }

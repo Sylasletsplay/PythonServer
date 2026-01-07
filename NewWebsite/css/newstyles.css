@@ -1,0 +1,85 @@
+.wrapper {
+    display: grid;
+    grid-template-areas:
+    "a b b b c d"
+    "a b b b c e"
+    "f g h i j k";
+    background-color: #d9480f;
+}
+.item1 {
+    grid-area: a;
+    height: 50px;
+    background-color: lightgray;
+}
+.item2 {
+    grid-area: b;
+    background-color: lightgray;
+    height: 100%;
+    width: 60vw;
+    min-height: 200px;
+    min-width: 400px;
+}
+.item3 {
+    grid-area: c;
+    background-color: lightgray;
+}
+.item4 {
+    grid-area: d;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+}
+.item5 {
+    grid-area: e;
+    background-color: lightgray;
+}
+.item6 {
+    grid-area: f;
+    background-color: blue;
+}
+.reload {
+    border-radius: 1em;
+    background-color: green;
+    color: white;
+    text-align: center;
+    margin-top: 40%;
+    margin-bottom: 40%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+.reload:hover {
+    background-color: rgb(22, 155, 22);
+}
+.reload:active {
+    color: rgb(22, 75, 22);
+}
+.chart_wrapper {
+    position: relative;
+    width: 70vw;
+    height: 69vh;
+}
+@media screen and (width >= 500px) {
+    .content {
+        height: 32.7vh;
+    }
+    .item1 {
+        height: 100%;
+        background-color: azure;
+    }
+    .item7 {
+        grid-area: h;
+        min-height: 200px;
+        min-width: 400px;
+        background-color: red;
+    }
+    .item2 {
+        height: fit-content;
+        width: fit-content;
+    }
+}
+#graph_selector {
+
+}
+#graph_value {
+
+}

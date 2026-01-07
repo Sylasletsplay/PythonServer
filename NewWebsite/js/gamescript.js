@@ -314,7 +314,6 @@ function get_shop() {
         setColorfromTier(data.tier_1, 'Options_1');
         setColorfromTier(data.tier_2, 'Options_2');
         setColorfromTier(data.tier_3, 'Options_3');
-
     })
     .catch(error => console.error('Failed to fetch data:', error));
 }

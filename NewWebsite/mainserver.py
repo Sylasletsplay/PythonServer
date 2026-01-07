@@ -46,10 +46,10 @@ def write_file(file_path):
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
-def write_scores_file(file_path, scores):
-    sorted_scores = sorted(scores, key=lambda x: x['score'], reverse=True)
+def write_sort_file(file_path, attribute, sort_key):
+    sorted_by_attribute = sorted(attribute, key=lambda x: x[sort_key], reverse=True)
     with open(file_path, 'w') as file:
-        json.dump(sorted_scores, file, indent=4)
+        json.dump(sorted_by_attribute, file, indent=4)
 
 def save_score(scores, username, score, time):
     new_entry = {
@@ -122,6 +122,9 @@ def update_users(username, password_input, objective):
 
     return credentialCheck
 
+def update_json_element(file,element):
+    pass
+
 def get_cookie_value(request_data, cookie_name):
     if isinstance(request_data, str):
         lines = request_data.split('\r\n')
@@ -138,9 +141,21 @@ def get_cookie_value(request_data, cookie_name):
                         return value.strip()
     return None
 
+
+def json_logging(client_address,user_action,login_status):
+    current_year = datetime.datetime.today().year
+    timestamp = datetime.datetime.now().timestamp()
+
+def get_user_element(element):
+    pass
+
 # --- CLIENT HANDLER ---
 
-def handle_client(secure_socket):
+def handle_client(secure_socket,client_address):
+    user_file_path = os.path.join(BASE_DIR, 'data', 'users.json')
+    scores_file_path = os.path.join(BASE_DIR, 'data', 'scores.json')
+    time_data = "0"
+    action = '-'
     try:
         # 1. Receive Request (Decrypted automatically)
         request_bytes = secure_socket.recv(4096)
@@ -160,8 +175,6 @@ def handle_client(secure_socket):
         path = first_line[1]
         
         print(f"Request: {method} {path}")
-
-        base_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Post Handel
         if method == 'POST':
@@ -183,11 +196,11 @@ def handle_client(secure_socket):
                     username = post_data.get('username')
                     score = post_data.get('score')
                     time_data = post_data.get('time')
-                    
-                    scores_file_path = os.path.join(base_dir, 'data', 'scores.json')
+                    user_playtime = get_user_element(username)
+                    time_data = int(time_data) + int
                     scores = read_file(scores_file_path)
                     save_score(scores, username, score, time_data)
-                    write_scores_file(scores_file_path, scores)
+                    write_sort_file(scores_file_path, scores, 'score')
                     
                     response_body = json.dumps({"status": "success", "message": "Score submitted!"}).encode()
                     header = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n" \
@@ -207,7 +220,6 @@ def handle_client(secure_socket):
                     if objective == 'login':
                         if return_value[0]:
                             if return_value[1]:
-                                user_file_path = os.path.join(BASE_DIR, 'data', 'users.json')
                                 for entry in read_file(user_file_path):
                                     if entry['username'] == username:
                                         uniqueid = entry['unique_id']
@@ -247,7 +259,7 @@ def handle_client(secure_socket):
             elif path == '/verifyLogin':
                 try:
                     auth_token = get_cookie_value(headers_list, "auth_token")
-                    if auth_token == None:
+                    if auth_token is None:
                         response_data = {"username": 'Gast', "status": "none"}
                         response_body = json.dumps(response_data).encode('utf-8')
                         
@@ -300,7 +312,7 @@ def handle_client(secure_socket):
             elif path == '/Logout':
                 try:
                     auth_token = get_cookie_value(headers_list, "auth_token")
-                    if auth_token == None:
+                    if auth_token is None:
                         response_data = {'message': 'User not logged in!'}
                         response_body = json.dumps(response_data).encode('utf-8')
                         header = "HTTP/1.1 200 OK\r\n" \
@@ -321,6 +333,18 @@ def handle_client(secure_socket):
                 except Exception as e:
                     print(f"Login Verify Error: {e}")
                     secure_socket.sendall(b"HTTP/1.1 500 Server Error\r\n\r\n")
+            elif path == '/getGraph':
+                #post_data
+                try:
+                    response_data = "1"
+                    response_body = json.dumps(response_data).encode('utf-8')
+                    header = "HTTP/1.1 200 OK\r\n" \
+                             "Content-Type: application/json\r\n" \
+                             f"Content-Length: {len(response_body)}\r\n" \
+                             "Access-Control-Allow-Origin: *\r\n" \
+                             "\r\n"
+                except Exception as e:
+                    print(f"Get Graph Error: {e}")
             elif path == '/getShop':
                 try:
                     shop = shop_logic.get_shop()
@@ -348,42 +372,50 @@ def handle_client(secure_socket):
             
             #html
             if path == '/' or path == '/sylas_collection':
-                file_path = os.path.join(base_dir, 'html','index.html')
+                file_path = os.path.join(BASE_DIR, 'html','index.html')
                 content_type = 'text/html'
+                action = 'main'
             elif path == '/bullethell':
-                file_path = os.path.join(base_dir, 'html','gamepage.html')
+                file_path = os.path.join(BASE_DIR, 'html','gamepage.html')
                 content_type = 'text/html'
+                action = 'game'
             elif path == '/Account':
-                file_path = os.path.join(base_dir, 'html','AccountPage.html')
+                file_path = os.path.join(BASE_DIR, 'html','AccountPage.html')
                 content_type = 'text/html'
+                action = 'account'
             elif path == '/Leaderboard':
-                file_path = os.path.join(base_dir, 'html','scorepage.html')
+                file_path = os.path.join(BASE_DIR, 'html','scorepage.html')
                 content_type = 'text/html'
+                action = 'leader'
+            elif path == '/Dashboard':
+                file_path = os.path.join(BASE_DIR, 'html', 'Dashboard.html')
+                content_type = 'text/html'
+                action = 'dashboard'
             #css
-            elif path == '/styles.css':
-                file_path = os.path.join(base_dir, 'css', 'styles.css')
+            elif path == '/css/'+content_file:
+                file_path = os.path.join(BASE_DIR, 'css', content_file)
                 content_type = 'text/css'
             #js
             elif path == '/js/'+content_file:
-                file_path = os.path.join(base_dir, 'js', content_file)
+                file_path = os.path.join(BASE_DIR, 'js', content_file)
                 content_type = 'application/javascript'
             #json
             elif path == '/data/'+content_file:
-                file_path = os.path.join(base_dir, 'data', content_file+'.json')
+                file_path = os.path.join(BASE_DIR, 'data', content_file+'.json')
                 content_type = 'application/json'
             #other
             elif path == '/favicon.ico':
-                file_path = os.path.join(base_dir, 'favicon.ico')
+                file_path = os.path.join(BASE_DIR, 'favicon.ico')
                 content_type = 'image/x-icon'
             
             # Fonts
             elif path == '/fonts/'+content_file:
-                file_path = os.path.join(base_dir, 'fonts', content_file)
+                file_path = os.path.join(BASE_DIR, 'fonts', content_file)
                 content_type = 'font/ttf'
             
             # Audio Files
             elif path == '/audio/'+content_file:
-                file_path = os.path.join(base_dir, 'audio', content_file)
+                file_path = os.path.join(BASE_DIR, 'audio', content_file)
                 content_type = 'audio/wav'
 
             if file_path and os.path.exists(file_path):
@@ -407,6 +439,7 @@ def handle_client(secure_socket):
                 print(f"404 Not Found: {path}")
                 secure_socket.sendall(b"HTTP/1.1 404 Not Found\r\n\r\n404 Not Found")
 
+        json_logging(client_address,action,time_data)
         secure_socket.close()
 
     except Exception as e:
@@ -439,7 +472,7 @@ def start_server():
 
             print(f"✨ Accepted SECURE connection from: {client_address}")
             
-            client_handler = threading.Thread(target=handle_client, args=(secure_socket,))
+            client_handler = threading.Thread(target=handle_client, args=(secure_socket,client_address))
             client_handler.start()
             
         except KeyboardInterrupt:
