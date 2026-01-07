@@ -233,6 +233,8 @@ progress::-webkit-progress-value {
     opacity: 100%;
     min-width: fit-content;
 }
+@media screen and (width < 400px) {
+}
 .menu_button {
     color: rgba(128, 180, 214, 0.788);
     border-radius: 1vh;
@@ -326,6 +328,7 @@ progress::-webkit-progress-value {
     border-color: rgba(226, 43, 226, 0.568);
     text-shadow: 0.2vh 0.2vh 0.5vh rgb(199, 0, 189);
     cursor: pointer;
+    transition: 225ms;
 }
 #refresh_button:active {
     color: rgb(135, 13, 186);

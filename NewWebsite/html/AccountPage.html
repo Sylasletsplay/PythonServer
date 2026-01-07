@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
+    <script>
+    function changeWindow(siteName) {
+        window.location = siteName;
+    }</script>
     <title>Account</title>
 </head>
 <body>
@@ -22,7 +26,7 @@
         </div>
         <div id="loginstate"></div>
         <div class="accountButtons" id='Logout'>Logout</div>
-        <div class="accountButtons" id='closeSite' onclick="closeWindow()" style="margin-top: 2vh;">Leave Site</div>
+        <div class="accountButtons" id='closeSite' onclick="changeWindow('sylas_collection')" style="margin-top: 2vh;">Leave Site</div>
         
     </div>
     </div>

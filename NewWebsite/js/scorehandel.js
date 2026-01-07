@@ -1,3 +1,6 @@
+function changeWindow(siteName) {
+    window.location = siteName;
+}
 function fetchJSONData() {
     fetch('/data/scores')
         .then(response => {

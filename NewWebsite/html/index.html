@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-    <script type="text/javascript" src="js/script.js">event.preventDefault();</script>
+    <script type="text/javascript" src="/js/script.js">event.preventDefault();</script>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Main</title>
     <meta name="description" content="Dunno yet">
@@ -14,8 +14,8 @@
 <body>
     <div id="menu_left">
         <button class="menu_button" popovertarget="menu_popover">Menu</button>
-        <button class="menu_button" id="the_button" onclick="event.preventDefault();openSite('Leaderboard')">Leader</button>
-        <button class="menu_button" id="accountButton" onclick="event.preventDefault();openSite('Account')">Account</button>
+        <button class="menu_button" id="the_button" onclick="event.preventDefault();changeWindow('Leaderboard')">Leader</button>
+        <button class="menu_button" id="accountButton" onclick="event.preventDefault();changeWindow('Account')">Account</button>
         <button class="menu_button" id="content_Button" onclick="event.preventDefault();changeWindow('Dashboard')">Dashboard</button>
     </div>
     <div id="outer_body_1">

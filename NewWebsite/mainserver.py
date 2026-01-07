@@ -113,7 +113,8 @@ def update_users(username, password_input, objective):
         new_entry = {
             "username": username,
             "password_hash": secure_hash,
-            "unique_id": createID(username)
+            "unique_id": createID(username),
+            "playtime": 0
         }
         users.append(new_entry)
         with open(user_file_path, 'w') as file:
@@ -121,9 +122,6 @@ def update_users(username, password_input, objective):
         credentialCheck = [False, False]
 
     return credentialCheck
-
-def update_json_element(file,element):
-    pass
 
 def get_cookie_value(request_data, cookie_name):
     if isinstance(request_data, str):
@@ -142,20 +140,46 @@ def get_cookie_value(request_data, cookie_name):
     return None
 
 
-def json_logging(client_address,user_action,login_status):
-    current_year = datetime.datetime.today().year
+def statistic_saving(path,client_address,user_id,user_action,playtime):
+    stats = read_file(path)
+    year = datetime.datetime.today().year
     timestamp = datetime.datetime.now().timestamp()
 
-def get_user_element(element):
-    pass
+    new_entry = {
+        "user_id": user_id,
+        "client_address": client_address,
+        "timestamp": timestamp,
+        "year": year,
+        "user_action": user_action,
+        "playtime": playtime
+    }
+    stats.append(new_entry)
+    with open(path, 'w') as file:
+        json.dump(stats, file, indent=4)
+def get_element_from_path(element,element_discriptor,search,file_path):
+    file = read_file(file_path)
+    for entry in file:
+        if entry[element_discriptor] == element:
+            return entry[search]
+    return None
+
+def set_element_from_path(element,element_discriptor,search,file_path,set_value):
+    file = read_file(file_path)
+    for entry in file:
+        if entry[element_discriptor] == element:
+            entry[search] = set_value
+    with (open(file_path,'w')) as f:
+        json.dump(file, f, indent=4)
 
 # --- CLIENT HANDLER ---
 
 def handle_client(secure_socket,client_address):
     user_file_path = os.path.join(BASE_DIR, 'data', 'users.json')
     scores_file_path = os.path.join(BASE_DIR, 'data', 'scores.json')
+    stat_file_path = os.path.join(BASE_DIR, 'data', 'stats.json')
     time_data = "0"
     action = '-'
+    user_id = 'Gast'
     try:
         # 1. Receive Request (Decrypted automatically)
         request_bytes = secure_socket.recv(4096)
@@ -164,9 +188,21 @@ def handle_client(secure_socket,client_address):
             return
         
         request_data = request_bytes.decode('utf-8', errors='ignore')
+        #for line in request_data.split('\n'):
+            #print(line)
         headers_list = request_data.split('\r\n')
         first_line = headers_list[0].split()
-        
+        #print('List of Headers: ',headers_list)
+        for line in headers_list:
+            #print('Line: ' + line)
+            if line.lower().startswith("content-length:"):
+                content_length = int(line.split(':')[1].strip())
+            if line.lower().startswith('cookie'):
+                auth_token = get_cookie_value(headers_list, "auth_token")
+
+        if auth_token:
+            user_id = verify_signed_id(auth_token)
+        user_playtime = get_element_from_path(user_id, 'unique_id', 'playtime', user_file_path)
         if len(first_line) < 2:
             secure_socket.close()
             return
@@ -185,7 +221,7 @@ def handle_client(secure_socket,client_address):
                     content_length = int(line.split(':')[1].strip())
                 if line.lower().startswith('cookie'):
                     auth_token = (line.split('='))[1]
-            
+
             body_start = request_data.find('\r\n\r\n') + 4
             body = request_data[body_start : body_start + content_length]
             if path == '/submitScore':
@@ -196,8 +232,12 @@ def handle_client(secure_socket,client_address):
                     username = post_data.get('username')
                     score = post_data.get('score')
                     time_data = post_data.get('time')
-                    user_playtime = get_user_element(username)
-                    time_data = int(time_data) + int
+                    print('Time Data: ', time_data)
+                    if user_playtime is not None:
+                        pass
+                    time_data = time_data + int(user_playtime)
+                    print(f'The User {username} has {time_data} Seconds playtime')
+                    set_element_from_path(username,'username','playtime',user_file_path,time_data)
                     scores = read_file(scores_file_path)
                     save_score(scores, username, score, time_data)
                     write_sort_file(scores_file_path, scores, 'score')
@@ -368,8 +408,6 @@ def handle_client(secure_socket,client_address):
             content_type = 'text/plain'
             content_name = path.split('/')
             content_file = content_name[len(content_name)-1]
-            print(content_file)
-            
             #html
             if path == '/' or path == '/sylas_collection':
                 file_path = os.path.join(BASE_DIR, 'html','index.html')
@@ -438,8 +476,8 @@ def handle_client(secure_socket,client_address):
             else:
                 print(f"404 Not Found: {path}")
                 secure_socket.sendall(b"HTTP/1.1 404 Not Found\r\n\r\n404 Not Found")
-
-        json_logging(client_address,action,time_data)
+        if user_id and action != '-':
+            statistic_saving(stat_file_path,client_address,user_id,action,user_playtime)
         secure_socket.close()
 
     except Exception as e:
@@ -470,7 +508,7 @@ def start_server():
                 raw_socket.close()
                 continue
 
-            print(f"✨ Accepted SECURE connection from: {client_address}")
+            print(f" --- Accepted SECURE connection from: {client_address} ---")
             
             client_handler = threading.Thread(target=handle_client, args=(secure_socket,client_address))
             client_handler.start()
@@ -482,3 +520,7 @@ def start_server():
 
 if __name__ == "__main__":
     start_server()
+
+# Enemy handeling auf dem Server please. → Generiert Gegner mit id, welche dem Client geschickt werden und alle hits werden an den Server gesendet via Requests. | Wichtig ist die id für die gegner, damit der selbe gegner nur einmal besiegt werden kann
+# demnach hat der Server ne DB für alle gegner und "Spielende" - Score und alles kann dann auf dem Server gehandelt werden und wird nur an den Spieler geschickt. → Websocket wäre natürlich ganz nett aber für die größe kein muss
+#

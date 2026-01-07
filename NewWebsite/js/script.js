@@ -2,6 +2,8 @@
 //  1. Cookie Handling
 // ====================================================================
 
+
+
 let want_cookies;
 let tictactoe_score = 0;
 const day = 24 * 60 * 60 * 1000;
