@@ -13,13 +13,11 @@ create.addEventListener('click', function() {
         else {
             window.alert('Enter a password with at least 6 Characters');
             pwInput.value = '';
-            return;
         }
     }
     else {
         window.alert('Enter a Username with at least 5 Characters');
         pwInput.value = '';
-        return;
     }
 });
 login.addEventListener('click', function() {
@@ -30,13 +28,11 @@ login.addEventListener('click', function() {
         else {
             window.alert('Enter a password with at least 6 Characters');
             pwInput.value = '';
-            return;
         }
     }
     else {
         window.alert('Enter a Username with at least 5 Characters');
         pwInput.value = '';
-        return;
     }
 });
 
