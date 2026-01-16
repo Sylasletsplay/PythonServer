@@ -1,25 +1,24 @@
 // Shop
-
-var price1 = 50;
-var price2 = 70;
-var price3 = 500;
+let price1 = 50;
+let price2 = 70;
+let price3 = 500;
 
 // Player definitions
 
-var step = 7;
-var queueDirection = [];
-var aimDirection = [];
-var money = 10000;
-var projectileColor = "white";
-var score = 0;
+let step = 7;
+let queueDirection = [];
+let aimDirection = [];
+let money = 10000;
+let projectileColor = "white";
+let score = 0;
 
-// maybe plyaer upgrade that let him autoshoot at 80% efficiency -> little slower so its fair
-// something like soy milk that decreases dmg but drastically increases firerate
-// dmg multiplicator should be a number stored seperately so dmg multiplicator is addative and can be increased and decreased with upgrades
+// maybe player upgrade that let him auto shoot at 80% efficiency -> little slower so its fair
+// something like soy milk that decreases dmg but drastically increases fire rate
+// dmg multiplicator should be a number stored separately so dmg multiplicator is additive and can be increased and decreased with upgrades
 
-var playerObject = {maxHitpointsPlayer: 5,hitpointsPlayer: 5, playerLevel: 1, weapon: "basic", weaponLevelPlayer: 1, attackspeedPlayer: 250, lastTimehitPlayer: 0, invincibilityDuration: 500, baseDamage: 1};
+let playerObject = {maxHitpointsPlayer: 5,hitpointsPlayer: 5, playerLevel: 1, weapon: "basic", weaponLevelPlayer: 1, attackspeedPlayer: 250, lastTimehitPlayer: 0, invincibilityDuration: 500, baseDamage: 1};
 
-var playerProjectiles = [];
+let playerProjectiles = [];
 
 // player constants
 const playerWeapons = [
@@ -43,11 +42,11 @@ const playerProjectileMovement = [
 const circle = document.getElementById("circle");
 const barrel = document.getElementById("barrel");
 
-// Enenmy Definitions
+// Enemy Definitions
 
-var difficulty = 1; // Will rise with time ind can be the multiplier for enemy health and damage with some tweaks
-var spawnersFull = false;
-var baseHealth = 5;
+let difficulty = 1; // Will rise with time ind can be the multiplier for enemy health and damage with some tweaks
+let spawnersFull = false;
+let baseHealth = 5;
 
 const spawnerPos = [
     [10,10],[500,10],[990,10],
@@ -55,17 +54,17 @@ const spawnerPos = [
     [10,990],[500,990],[990,990]
 ];
 
-var usedEnemyTypes = ["","","","","","","",""];
-var usedSpawnerPos = [0,0,0,0,0,0,0,0];
+let usedEnemyTypes = ["","","","","","","",""];
+let usedSpawnerPos = [0,0,0,0,0,0,0,0];
 const fullSpawnerPos = [1,1,1,1,1,1,1,1];
 
 
-var spawnDelay = 2500 + Math.floor(Math.random()*1000);
-var lastSpawnTime = Date.now();
+let spawnDelay = 2500 + Math.floor(Math.random()*1000);
+let lastSpawnTime = Date.now();
 
 const keysPressed = {};
-var ring_x = 250;
-var ring_y = 250;
+let ring_x = 250;
+let ring_y = 250;
 
 const enemyProjectileMovement = [
     "basic",
@@ -85,17 +84,17 @@ const enemyBagRefill = [
     "tank","tank",
     "gunner"
 ];
-var enemyBag = [...enemyBagRefill];
+let enemyBag = [...enemyBagRefill];
 
 
 const basicProjectileTypes = [
     "basic","basic","basic","basic","basic","basic","basic",
     "scatter","scatter","scatter","scatter",
-    "leave_behind_obstackle","leave_behind_obstackle","leave_behind_obstackle",
+    "leave_behind_obstacle","leave_behind_obstacle","leave_behind_obstacle",
     "scatter_mini_missile",
     "scatter_mini_homing_missile",
 ];
-var basicProjectileTypesBag = [...basicProjectileTypes];
+let basicProjectileTypesBag = [...basicProjectileTypes];
 
 
 const sniperProjectileTypes = [
@@ -104,26 +103,26 @@ const sniperProjectileTypes = [
     "scatter_mini_missile","scatter_mini_missile","scatter_mini_missile","scatter_mini_missile","scatter_mini_missile",
     "scatter_mini_homing_missile","scatter_mini_homing_missile","scatter_mini_homing_missile",
 ];
-var sniperProjectileTypesBag = [...sniperProjectileTypes];
+let sniperProjectileTypesBag = [...sniperProjectileTypes];
 
 
 const tankProjectileTypes = [
     "basic","basic","blast","blast","blast","blast",
     "scatter","scatter","scatter","scatter","scatter","scatter",
-    "leave_behind_obstackle","leave_behind_obstackle",
+    "leave_behind_obstacle","leave_behind_obstacle",
     "scatter_mini_missile",
     "scatter_mini_homing_missile",
 ];
-var tankProjectileTypesBag = [...tankProjectileTypes];
+let tankProjectileTypesBag = [...tankProjectileTypes];
 
 
 const gunnerProjectileTypes = [
     "basic","basic","basic","basic","basic","basic","basic","basic",
     "scatter","scatter","scatter","scatter","scatter","scatter","scatter","scatter",
 ];
-var gunnerProjectileTypesBag = [...gunnerProjectileTypes];
+let gunnerProjectileTypesBag = [...gunnerProjectileTypes];
 
-var enemyObjects = [
+let enemyObjects = [
     {spawnerIndex: 0, rendered: false, spawnerPos: spawnerPos[0], enemyType: "", projectileType: "", enemyLevel: 1, enemyHealth: 3, enemyDamage: 1,reloadSpeed: 2000, lastTimeShot: 0, projectileSpeed: 5, attackSpeed: 1000, drop: 20},
     {spawnerIndex: 1, rendered: false, spawnerPos: spawnerPos[1], enemyType: "", projectileType: "", enemyLevel: 1, enemyHealth: 3, enemyDamage: 1,reloadSpeed: 2000, lastTimeShot: 0, projectileSpeed: 5, attackSpeed: 1000, drop: 20},
     {spawnerIndex: 2, rendered: false, spawnerPos: spawnerPos[2], enemyType: "", projectileType: "", enemyLevel: 1, enemyHealth: 3, enemyDamage: 1,reloadSpeed: 2000, lastTimeShot: 0, projectileSpeed: 5, attackSpeed: 1000, drop: 20},
@@ -133,7 +132,7 @@ var enemyObjects = [
     {spawnerIndex: 6, rendered: false, spawnerPos: spawnerPos[6], enemyType: "", projectileType: "", enemyLevel: 1, enemyHealth: 3, enemyDamage: 1,reloadSpeed: 2000, lastTimeShot: 0, projectileSpeed: 5, attackSpeed: 1000, drop: 20},
     {spawnerIndex: 7, rendered: false, spawnerPos: spawnerPos[7], enemyType: "", projectileType: "", enemyLevel: 1, enemyHealth: 3, enemyDamage: 1,reloadSpeed: 2000, lastTimeShot: 0, projectileSpeed: 5, attackSpeed: 1000, drop: 20}
 ];
-var enemyProjectiles = [
+let enemyProjectiles = [
     [//First spawner
         {type: "basic", movement: "basic", rendered: false, x1: 0, y1: 0, x2: 0, y2: 0, direction: [0,1], projectileSpeed: 2.5}
     ],
@@ -160,8 +159,8 @@ var enemyProjectiles = [
     ]
 ];
 
-var pausedTime = 0;
-var e_death_t = 0;
+let pausedTime = 0;
+let e_death_t = 0;
 
 window.addEventListener('keydown', function(event) {
     keysPressed[event.key] = true;
@@ -215,22 +214,22 @@ function getBought(slot,slotnum) {
 }
 
 function buyShop(event) {
-    let shopslot = event.currentTarget.id; 
+    let shopslot = event.currentTarget.id;
     let object = event.currentTarget;
     console.log(object);
-    if (shopslot == "shopSlot1" && money > price1) {
+    if (shopslot === "shopSlot1" && money > price1) {
         money-=price1;
         price1+=50;
         slotnum = 1;
         console.log('Basedamege is:'+playerObject.baseDamage);
     }
-    else if (shopslot == "shopSlot2" && money > price2) {
+    else if (shopslot === "shopSlot2" && money > price2) {
         money-=price2;
         price2+= 50;
         playerObject.maxHitpointsPlayer +=3;
         slotnum = 2;
     }
-    else if (shopslot == "shopSlot3" && money > price3) {
+    else if (shopslot === "shopSlot3" && money > price3) {
         money-=price3;
         price3+=200;
         slotnum = 3;
@@ -241,22 +240,22 @@ function buyShop(event) {
     document.getElementById(shopslot).removeEventListener('click',buyShop);
 }
 
-var initialTime;
-var pID;
-var lastTimeShotPlayer = 0;
-var paused = false;
+let initialTime;
+let pID;
+let lastTimeShotPlayer = 0;
+let paused = false;
 const day = 24 * 60 * 60 * 1000;
-var gameEndTime;
+let gameEndTime;
 
-var want_cookies = false;
-var inShop = false;
+let want_cookies = false;
+let inShop = false;
 
 function gamePause() {
     if (playerObject.hitpointsPlayer <= 0) {
         gameEndTime = Date.now();
         document.getElementById("gameOver").showPopover();
     }
-    if (inShop == true) {
+    if (inShop === true) {
         document.getElementById("shop").showPopover();
         if (keysPressed['u']) {
             updateMaxHealth();
@@ -270,7 +269,7 @@ function gamePause() {
         requestAnimationFrame(gamePause);
     }
     else {
-        if (paused == true) {
+        if (paused === true) {
             document.getElementById("pauseMenu").showPopover();
             if (keysPressed['u']) {
                 pausedTime = Date.now() - pausedTime;
@@ -341,10 +340,10 @@ function gameLoop() {
         return;
     }
 
-    if (initialTime == undefined) {
+    if (initialTime === undefined) {
         initialTime = Date.now();
     }
-    if (compare_arrays(usedSpawnerPos, fullSpawnerPos) != true && pausedTime + lastSpawnTime + spawnDelay < Date.now()) {
+    if (compare_arrays(usedSpawnerPos, fullSpawnerPos) !== true && pausedTime + lastSpawnTime + spawnDelay < Date.now()) {
         pausedTime = 0;
         spawnEnemy();
         renderEnemy();
@@ -370,7 +369,7 @@ function gameLoop() {
     for (let i = 0; i < enemyProjectiles.length; i++) {
         for (let j = 0; j < enemyProjectiles[i].length; j++) {
             const projectile = enemyProjectiles[i][j];
-            var projectileHit = false;
+            let projectileHit = false;
             if (projectile.rendered) {
                 moveProjectile(projectile);
                 drawProjectile(projectile.id, projectile.x1, projectile.y1, projectile.x2, projectile.y2);
@@ -410,8 +409,8 @@ function gameLoop() {
     if (keysPressed['s'] || keysPressed['j']) queueDirection[1] += step;
     if (keysPressed['d'] || keysPressed['h']) queueDirection[0] += step;
 
-    if (queueDirection[0] != 0 && queueDirection[1] != 0) {
-        var new_x_y = normalizeVector([0,0],queueDirection);
+    if (queueDirection[0] !== 0 && queueDirection[1] !== 0) {
+        let new_x_y = normalizeVector([0,0],queueDirection);
         ring_x += new_x_y[0]*step;
         ring_y += new_x_y[1]*step;
     }
@@ -426,14 +425,14 @@ function gameLoop() {
     if (ring_y < 0) ring_y = 1000;
     circle.setAttribute("cx", ring_x);
     circle.setAttribute("cy", ring_y);
-    
+
     aimDirection = [0,0];
     if (keysPressed['ArrowUp']) aimDirection[1] -= step;
     if (keysPressed['ArrowLeft']) aimDirection[0] -= step;
     if (keysPressed['ArrowDown']) aimDirection[1] += step;
     if (keysPressed['ArrowRight']) aimDirection[0] += step;
 
-    if ((aimDirection[0] != 0 || aimDirection[1] != 0) && (playerObject.attackspeedPlayer + lastTimeShotPlayer) < Date.now()) {
+    if ((aimDirection[0] !== 0 || aimDirection[1] !== 0) && (playerObject.attackspeedPlayer + lastTimeShotPlayer) < Date.now()) {
         lastTimeShotPlayer = Date.now();
         projectileColor = "white";
         let randomShotSound = Math.floor(Math.random()*5);
@@ -584,12 +583,9 @@ function savePlayerScore() {
     });
 }
 
-function enterName() {
-    let name = 'Anonym';
-    if (document.getElementById('playerName').value.trim() != "") {
-        name=document.getElementById('playerName').value;
-    }
-    return name;
+function changeMobile() {
+    document.getElementById("statcolum").style.display = 'none';
+    document.getElementById("enemyStatscolum").style.display = 'none';
 }
 
 function scoreSystem(type) {
@@ -618,13 +614,13 @@ function spawnEnemy() {
     const chosenPos = chooseSpawnerPos();
     const enemyType = chooseEnemy();
     const chosenProjectileType = chooseProjectile(enemyType);
-    
+
     eO = enemyObjects[chosenPos];
     eO.enemyType = enemyType;
     eO.projectileType = chosenProjectileType;
     switch (enemyType) {
             case "basic": eO.enemyHealth =  (playerObject.baseDamage/3) * (playerObject.attackspeedPlayer / 100) * baseHealth +5; eO.reloadSpeed = 1;  eO.projectileSpeed = step+4; break;
-            case "sniper": eO.enemyHealth =  (playerObject.baseDamage/3) * (playerObject.attackspeedPlayer / 100) * baseHealth +4; eO.reloadSpeed = 3; eO.projectileSpeed = step+10; break; 
+            case "sniper": eO.enemyHealth =  (playerObject.baseDamage/3) * (playerObject.attackspeedPlayer / 100) * baseHealth +4; eO.reloadSpeed = 3; eO.projectileSpeed = step+10; break;
             case "tank": eO.enemyHealth =  (playerObject.baseDamage/3) * (playerObject.attackspeedPlayer / 100) * baseHealth +7; eO.reloadSpeed = 2; eO.projectileSpeed = step+3.5; break;
             case "gunner": eO.enemyHealth =  (playerObject.baseDamage/3) * (playerObject.attackspeedPlayer / 100) * baseHealth +3; eO.reloadSpeed = 0.75; eO.projectileSpeed = step+3; break;
 
@@ -652,60 +648,62 @@ function chooseSpawnerPos() {
     return chosenPos;
 }
 
-var firstSpawned = false;
+let firstSpawned = false;
 function chooseEnemy() {
-    if (firstSpawned == false) {
+    if (firstSpawned === false) {
         console.log("Returned enemy: basic");
         firstSpawned = true;
         return "basic";
     }
     else {
-        var chosenEnemy = Math.floor(Math.random() * enemyBag.length);
-        var returnableEnemy = enemyBag[chosenEnemy];
+        let chosenEnemy = Math.floor(Math.random() * enemyBag.length);
+        let returnableEnemy = enemyBag[chosenEnemy];
         console.log("Returned enemy: " + returnableEnemy);
         enemyBag.splice(chosenEnemy, 1);
-        if (enemyBag.length == 0) {
+        if (enemyBag.length === 0) {
             enemyBag.push(...enemyBagRefill);
         }
-        
+
         return returnableEnemy;
     }
 }
 
 function chooseProjectile(enemyType) {
+    let chosenWeaponIdx = 0
     switch (enemyType) {
+
         case "basic":
-            if (basicProjectileTypesBag.length == 0) {
+            if (basicProjectileTypesBag.length === 0) {
                 basicProjectileTypesBag.push(...basicProjectileTypes);
             }
-            var chosenWeaponIdx = Math.floor(Math.random() * basicProjectileTypesBag.length);
+            chosenWeaponIdx = Math.floor(Math.random() * basicProjectileTypesBag.length);
             chosenWeapon = basicProjectileTypesBag[chosenWeaponIdx];
             basicProjectileTypesBag.splice(chosenWeaponIdx, 1);
             return chosenWeapon;
 
         case "tank":
-            if (tankProjectileTypesBag.length == 0) {
+            if (tankProjectileTypesBag.length === 0) {
                 tankProjectileTypesBag.push(...tankProjectileTypes);
             }
-            var chosenWeaponIdx = Math.floor(Math.random() * tankProjectileTypesBag.length);
+            chosenWeaponIdx = Math.floor(Math.random() * tankProjectileTypesBag.length);
             chosenWeapon = tankProjectileTypesBag[chosenWeaponIdx];
             tankProjectileTypesBag.splice(chosenWeaponIdx, 1);
             return chosenWeapon;
 
         case "sniper":
-            if (sniperProjectileTypesBag.length == 0) {
+            if (sniperProjectileTypesBag.length === 0) {
                 sniperProjectileTypesBag.push(...sniperProjectileTypes);
             }
-            var chosenWeaponIdx = Math.floor(Math.random() * sniperProjectileTypesBag.length);
+            chosenWeaponIdx = Math.floor(Math.random() * sniperProjectileTypesBag.length);
             chosenWeapon = sniperProjectileTypesBag[chosenWeaponIdx];
             sniperProjectileTypesBag.splice(chosenWeaponIdx, 1);
             return chosenWeapon;
 
         case "gunner":
-            if (gunnerProjectileTypesBag.length == 0) {
+            if (gunnerProjectileTypesBag.length === 0) {
                 gunnerProjectileTypesBag.push(...gunnerProjectileTypes);
             }
-            var chosenWeaponIdx = Math.floor(Math.random() * gunnerProjectileTypesBag.length);
+            chosenWeaponIdx = Math.floor(Math.random() * gunnerProjectileTypesBag.length);
             chosenWeapon = gunnerProjectileTypesBag[chosenWeaponIdx];
             gunnerProjectileTypesBag.splice(chosenWeaponIdx, 1);
             return chosenWeapon;
@@ -722,7 +720,7 @@ function createEnemyProjectile(enemy) {
     const direction = normalizeVector([startPos.x, startPos.y], [targetPos.x, targetPos.y]);
 
     // Create and return the new projectile object
-    const newProjectile = {
+    return {
         id: `enemy_projectile_${nextProjectileId++}`,
         type: enemy.projectileType,
         movement: chooseEnemyMovement(), // Your existing function
@@ -731,25 +729,24 @@ function createEnemyProjectile(enemy) {
         y1: startPos.y,
         x2: startPos.x, // For a line projectile, x1/y1 and x2/y2 can be the same
         y2: startPos.y,
-        direction: { x: direction[0], y: direction[1] }, // Store direction as an object
+        direction: {x: direction[0], y: direction[1]}, // Store direction as an object
         projectileSpeed: enemy.projectileSpeed,
     };
-    return newProjectile;
 }
 
 function createPlayerProjectile(aimDirection) {
     // Get the calculated damage and speed
     const attributes = getAttributesForProjectile();
-    
+
     // Normalize the aim direction
     const normalizedDir = normalizeVector([0, 0], aimDirection);
 
     const newProjectile = {
         // FIX #1: Use the global counter for a unique, permanent ID
-        id: `player_projectile_${nextProjectileId++}`, 
-        
+        id: `player_projectile_${nextProjectileId++}`,
+
         // FIX #2: Add the missing 'rendered' property
-        rendered: true, 
+        rendered: true,
 
         type: attributes[0],
         movement: attributes[1],
@@ -762,9 +759,9 @@ function createPlayerProjectile(aimDirection) {
         direction: { x: normalizedDir[0], y: normalizedDir[1],  }
     };
     playerProjectiles.push(newProjectile);
-    
+
     // Return the new permanent ID
-    return newProjectile.id; 
+    return newProjectile.id;
 }
 
 function getAttributesForProjectile() {
@@ -777,8 +774,8 @@ function getAttributesForProjectile() {
 
 function calculatePlayerAttributes() {
     pO = playerObject;
-    var damageMult;
-    var weaponBaseDamage;
+    let damageMult;
+    let weaponBaseDamage;
     switch (pO.weapon) {
         case "basic": weaponBaseDamage = 1.5; damageMult = 1; projectileSpeed = step+3;break;
         case "sniper": weaponBaseDamage = 2; damageMult = 1.5; projectileSpeed = (step*3)+3; pO.attackspeedPlayer = 400; break;
@@ -786,16 +783,16 @@ function calculatePlayerAttributes() {
     damageMult += pO.weaponLevelPlayer/5;
 
     // crit chance -> currently fixed with 1/5 and 25% more dmg
-    if (Math.floor(Math.random() * 10) == 1 || Math.floor(Math.random() * 10) == 10) {
+    if (Math.floor(Math.random() * 10) === 1 || Math.floor(Math.random() * 10) === 10) {
         damageMult += 0.25;
     }
 
-    damage = (pO.baseDamage + weaponBaseDamage) * damageMult;
+    let damage = (pO.baseDamage + weaponBaseDamage) * damageMult;
     return [damage,projectileSpeed];
 }
 
 function chooseEnemyMovement() {
-    chosenMov = Math.floor(Math.random() * enemyProjectileMovement.length);
+    let chosenMov = Math.floor(Math.random() * enemyProjectileMovement.length);
     return enemyProjectileMovement[chosenMov];
 }
 
@@ -868,4 +865,4 @@ function compare_arrays(a, b) {
 console.log("Starting");
 updatePlayerStats();
 const gameStartTime = Date.now();
-requestAnimationFrame(gameLoop);
+requestAnimationFrame(gameLoop);y
