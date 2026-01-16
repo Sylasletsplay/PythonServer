@@ -1,7 +1,22 @@
+// Create WebSocket connection.
+const socket = new WebSocket("wss://10.31.5.37:443");
+// Connection opened
+socket.addEventListener("open", (event) => {
+    socket.send("Hello Server!");
+});
+// Listen for messages
+socket.addEventListener("message", (event) => {
+    let response = JSON.parse(event.data);
+    console.log("Message from server ", response.message);
+});
+document.addEventListener("click", (event) => {
+    socket.send('Clicked the screen');
+})
+
+
 // ====================================================================
 //  1. Cookie Handling
 // ====================================================================
-
 
 
 let want_cookies;
@@ -43,7 +58,7 @@ async function checking_if_cookie() {
 }
 
 async function setting_cookie(event) {
-    if (event.target.id == "cookie_accept") {
+    if (event.target.id === "cookie_accept") {
         want_cookies = true;
         await save_score(); // Save the current score immediately
     } else {
@@ -111,7 +126,7 @@ function endGame(isDraw) {
     }
 
     if (tictactoe_counter) tictactoe_counter.innerHTML = tictactoe_score;
-    save_score();
+        save_score()
 }
 
 function refreshPlayarea() {
