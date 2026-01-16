@@ -6,40 +6,91 @@
     <link rel="stylesheet" href="/css/newstyles.css">
 </head>
 <body style="background-color: black;">
+    <div id="calendar" popover="auto">
+        <div class="year_selector">
+            <button class="year_button" id="year_down"><</button>
+                <div id="year_input" class="overview_style"></div>
+            <button class="year_button" id="year_up">></button>
+        </div>
+        <div class="month_selector">
+            <button class="month_button" id="month_down"><</button>
+            <div id="month_input" class="overview_style"></div>
+            <button class="month_button" id="month_up">></button>
+        </div>
+        <div id="calendar_wrapper">
+            <div class="weekday">Mo</div>
+            <div class="weekday">Tu</div>
+            <div class="weekday">We</div>
+            <div class="weekday">Th</div>
+            <div class="weekday">Fr</div>
+            <div class="weekday">Sa</div>
+            <div class="weekday">Su</div>
+        </div>
+        <button id="submit_date">Submit</button>
+    </div>
     <div class="wrapper">
         <div class="item1 content"></div>
-        <div class="item2 content">
-            <div class="chart_wrapper">
+        <div class="item2 content" id="chart_holder">
+            <div class="chart_wrapper" id="chart_wrapper">
                 <canvas id="myChart"></canvas>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-                const ctx = document.getElementById('myChart');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                        datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+            <script id="chart_script">
+                function the_chart (list_label,data_input,description,chart_type) {
+                    const ctx = document.getElementById('myChart');
+                    new Chart(ctx, {
+                        type: chart_type,
+                        data: {
+                            labels: list_label,
+                            datasets: [{
+                                label: description,
+                                data: data_input
+                            }]
+                        },
+                        options: {}
+                    });
+                }
             </script>
         </div>
-        <div class="item3 content"><div id='refresh_button' class="reload">Button</div></div>
-        <div class="item4 content"><div id='graph_selector'></div><div id='graph_value'></div></div>
-        <div class="item5 content"></div>
+        <div class="item3 content"></div>
+        <div class="item4 content"></div>
+        <div class="item5"></div>
         <div class="item6 content"></div>
-        <div class="item7 content"></div>
+        <div class="item7 content">
+            <div>
+                <label for="choose_chart"></label>
+                <select id="choose_chart">
+                    <option value="">Choose a Chart</option>
+                    <option value="pie">Pie</option>
+                    <option value="line">Line</option>
+                    <option value="bar">Bar</option>
+                </select>
+            </div>
+            <!-- Datalist should pull the data from server and it should also be validated by the server one entered -->
+            <datalist id="search_options">
+                <option value="Chocolate"></option>
+                <option value="Coconut"></option>
+                <option value="Mint"></option>
+                <option value="Strawberry"></option>
+                <option value="Vanilla"></option>
+            </datalist>
+            <div>
+                <label for="x_axis_choice">Choose x:</label>
+                <input list="search_options" id="x_axis_choice"/>
+            </div>
+            <div>
+                <label for="y_axis_choice">Choose y:</label>
+                <input list="search_options" id="y_axis_choice"/>
+            </div>
+            <div id="time_input">
+                Timespan:
+                <button id="start_time" popovertarget="calendar">From</button>
+                <div id="date_visual_1"></div>
+                <button id="end_time" popovertarget="calendar">To</button>
+                <div id="date_visual_2"></div>
+            </div>
+            <div id='chart_button' class="load">Load</div>
+        </div>
     </div>
     <script type="text/javascript" src="js/content-distribution.js">event.preventDefault();</script>
 </body>
