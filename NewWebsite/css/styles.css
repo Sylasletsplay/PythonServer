@@ -1,37 +1,31 @@
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 body {
-    background: radial-gradient(
-        ellipse at top left,
-        rgb(169, 0, 175),
-        rgb(54, 0, 28) 90%
-    );
-    background-repeat: no-repeat; 
     background-size: cover;
-    background-attachment: fixed;
+    background: radial-gradient(
+            ellipse at top left,
+            rgb(169, 0, 175),
+            rgb(54, 0, 28) 90%
+    ) no-repeat fixed;
 }
 #language_display {
     color: rgb(158, 240, 255);
 }
 .gamespace {
-  padding-left: 2vw;
-  padding-right: 2vw;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-  max-height: 90vh;
-  max-width: 90vw;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    padding: 2vh 2vw;
+    max-height: 90vh;
+    max-width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 .statHead {
     font-size: 1vw;
@@ -102,7 +96,6 @@ body {
 }
 #healthContainer{
     display: flex;
-    size: fit-content;
     justify-content: center;
 }
 #healthBar {
@@ -133,8 +126,6 @@ progress::-webkit-progress-value {
 #title {
     font-family: Drifty;
     text-align: center;
-    margin-top: 2vh;
-    margin-bottom: 1vh;
     border-radius: 1vh;
     padding: 1vh;
     font-size: 4vw;
@@ -146,8 +137,7 @@ progress::-webkit-progress-value {
     box-shadow: 0.2vh 0.2vh 2vh black;
     max-width: 15vw;
     min-width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 2vh auto 1vh;
 }
 #outer_body_1 {
     background-color: rgba(0, 0, 0, 0);
@@ -217,14 +207,13 @@ progress::-webkit-progress-value {
     top: 16vh;
     border-radius: 0 3vh 3vh 0;
     background-color: rgba(3, 130, 141, 0.485);
-    border: solid;
-    border-color: rgba(3, 60, 65, 0.452);
+    border: solid rgba(3, 60, 65, 0.452);
     box-shadow: 0 0 4vw;
     transition: 250ms;
     margin-left: 0;
 }
 #menu_left .menu_button {
-    opacity: 0%;
+    opacity: 0;
 }
 #menu_left:hover {
     width: 9em;
@@ -265,7 +254,7 @@ progress::-webkit-progress-value {
     align-items: center;
     justify-content: center;
     animation: 1.5s linear opening_popover;
-    box-shadow: 0vh 0vh 1vh rgb(166, 0, 158);
+    box-shadow: 0 0 1vh rgb(166, 0, 158);
 }
 @keyframes opening_popover {
     0% {
@@ -278,7 +267,7 @@ progress::-webkit-progress-value {
     }
     10% {
         top: -88vh;
-        left: 0vw;
+        left: 0;
         height: 0.5vh;
         width: 40vw;
         box-shadow: 0.2vh 0.2vh 3vh rgb(166, 0, 158);
@@ -292,13 +281,13 @@ progress::-webkit-progress-value {
     98% {
         top: -20vh;
         height: 68.5vh;
-        box-shadow: 0vh 0vh 1vh rgb(166, 0, 158);
+        box-shadow: 0 0 1vh rgb(166, 0, 158);
         content-visibility: hidden;
     }
-    100% {
+    100% {,
         top: -20vh;
         height: 68.5vh;
-        box-shadow: 0vh 0vh 1vh rgb(166, 0, 158);
+        box-shadow: 0 0 1vh rgb(166, 0, 158);
         content-visibility: visible;
     }
 }
@@ -309,13 +298,11 @@ progress::-webkit-progress-value {
 #refresh_button {
     background-color: rgba(209, 58, 83, 0.836);
     color: rgb(255, 105, 130);
-    border: solid;
-    border-width: 0.2vh;
     height: 3vh;
     width: 11vh;
     min-width: fit-content;
     min-height: fit-content;
-    border-color: rgba(206, 52, 103, 0.902);
+    border: 0.2vh solid rgba(206, 52, 103, 0.902);
     border-radius: 1vh;
     text-shadow: 0.2vh 0.2vh 0.5vh rgb(255, 0, 149);
     box-shadow: 0.5vh 0.5vh 2vh rgba(238, 130, 186, 0.326);
@@ -474,7 +461,6 @@ progress::-webkit-progress-value {
     margin-right: 1vw;
     margin-bottom: 1vw;
     height: 35vh;
-    max-width: 10vh;
     max-width: 300px;
     background-color: #653d22;
     border-radius: 2vh;
