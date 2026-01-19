@@ -6,80 +6,190 @@
     "f g h i j k";
     background-color: #d9480f;
 }
+#calendar:popover-open {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 15px;
+}
+#calendar_wrapper {
+    display: grid;
+    margin: 0.5em;
+    grid-template-columns: repeat(7,1fr);
+    min-height: fit-content;
+    min-width: fit-content;
+}
+.month_selector {
+    display: grid;
+    margin: 5px;
+    grid-template-columns: repeat(3,1fr);
+    min-height: fit-content;
+    min-width: fit-content;
+}
+.month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.49);
+    height: 35px;
+    width: 35px;
+    min-width: fit-content;
+    min-height: fit-content;
+    border-radius: 100%;
+    padding: 5px;
+    margin: 5px;
+    color: white;
+    transition: 200ms;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+.weekday {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    height: 35px;
+    width: 35px;
+    min-width: fit-content;
+    min-height: fit-content;
+    border-radius: 100%;
+    padding: 5px;
+    margin: 0.6em;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.49);
+    height: 35px;
+    width: 35px;
+    min-width: fit-content;
+    min-height: fit-content;
+    border-radius: 100%;
+    padding: 5px;
+    margin: 0.6em;
+    color: white;
+    transition: 250ms;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+.date:hover {
+    background-color: black;
+    cursor: pointer;
+    transition: 250ms;
+}
+.date_hover {
+    background-color: white;
+}
+.date_hover:hover {
+    cursor: default !important;
+    background-color: white;
+}
+
+#submit_date {
+    width: fit-content;
+    padding: 10px 10px;
+}
+.month_button {
+
+}
+.overview_style {
+    text-align: center;
+    width: fit-content;
+    padding: 5px;
+    font-size: 1.25em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+.year_selector {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+#year_down {
+    margin-left: 0;
+}
+#year_up {
+    margin-right: 0;
+}
 .item1 {
     grid-area: a;
-    height: 50px;
     background-color: lightgray;
 }
 .item2 {
     grid-area: b;
     background-color: lightgray;
     height: 100%;
-    width: 60vw;
+    width: fit-content;
     min-height: 200px;
     min-width: 400px;
 }
 .item3 {
-    grid-area: c;
-    background-color: lightgray;
-}
-.item4 {
-    grid-area: d;
-    background-color: lightgray;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    grid-area: c;
+    height: fit-content;
+    width: fit-content;
+    min-width: 468px;
+    min-height: 256px;
+    background-color: #acacac;
+}
+.item4 {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-area: d;
+    background-color: lightgray;
 }
 .item5 {
     grid-area: e;
-    background-color: lightgray;
 }
 .item6 {
     grid-area: f;
     background-color: blue;
 }
-.reload {
+.item7 {
+    grid-area: g;
+    min-height: 200px;
+    min-width: 400px;
+    height: fit-content;
+    width: fit-content;
+    background-color: red;
+}
+.load {
     border-radius: 1em;
     background-color: green;
     color: white;
     text-align: center;
-    margin-top: 40%;
-    margin-bottom: 40%;
     -webkit-user-select: none;
     -moz-user-select: none;
 }
-.reload:hover {
+.load:hover {
     background-color: rgb(22, 155, 22);
 }
-.reload:active {
+.load:active {
     color: rgb(22, 75, 22);
 }
 .chart_wrapper {
     position: relative;
-    width: 70vw;
+    max-width: 70vw;
     height: 69vh;
+    width: 35vw;
+    min-height: 200px;
+    min-width: 400px;
+    padding: 1em;
 }
-@media screen and (width >= 500px) {
-    .content {
-        height: 32.7vh;
-    }
-    .item1 {
-        height: 100%;
-        background-color: azure;
-    }
-    .item7 {
-        grid-area: h;
-        min-height: 200px;
-        min-width: 400px;
-        background-color: red;
-    }
-    .item2 {
-        height: fit-content;
-        width: fit-content;
-    }
-}
-#graph_selector {
-
-}
-#graph_value {
-
+#myChart {
+    height: 100%;
+    width: 100%;
 }
