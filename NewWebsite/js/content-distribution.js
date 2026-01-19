@@ -152,7 +152,7 @@ generate.addEventListener('click', function(){
 
 function setDateColor (date) {
     for (let i = 0; i < date_elements.length; i++) {
-        if (date_elements[i].innerHTML === date) {
+        if (date_elements[i].innerHTML === date && date_elements[i].style.backgroundColor === 'rgba(0, 0, 0, 0.49)') {
             date_elements[i].style.backgroundColor = 'blue';
             chosenDate = date_elements[i].innerHTML;
             break;
@@ -168,21 +168,16 @@ function get_chosen_Date () {
     }
     return null;
 }
-function get_outer_Months(initial_month,initial_day) {
-    let prevmonth = 0;
-    let nextmonth = 0;
-    console.log(initial_month);
+function get_prev_Month(initial_month) {
+    let prevmonth;
     if (initial_month === 11) {
         prevmonth = 10;
-        nextmonth = 0;
     }
     else if (initial_month === 0) {
         prevmonth = 11;
-        nextmonth = 1;
     }
     else {
         prevmonth = currentMonth-1;
-        nextmonth = currentMonth+1;
     }
     let prev_len = monthLen[prevmonth]
     let next_weekday = convert_weekday(new Date(parseInt(currentYear), prevmonth, 1).getDay());
@@ -190,27 +185,30 @@ function get_outer_Months(initial_month,initial_day) {
 }
 
 function loadCalendar(current_month,month_len,initial_day) {
-    let outer = get_outer_Months(current_month,initial_day);
+    let outer = get_prev_Month(current_month);
     for (let i=0;i<42; i++) {
         let div = document.createElement('div');
         div.className = 'date';
         if (i<initial_day) {
             div.innerHTML = (i+outer[0]-initial_day+1).toString();
+            div.classList.add('date_hover');
+            div.style.backgroundColor = '#363737';
         }
         else if (i>=initial_day && i<=month_len+initial_day-1) {
             div.innerHTML = (i-initial_day+1).toString();
+            div.style.backgroundColor = 'rgba(0, 0, 0, 0.49)';
         }
         else {
             div.innerHTML = (i-43+10).toString();
             div.classList.add('date_hover');
-            div.style.backgroundColor = 'red';
+            div.style.backgroundColor = '#363737';
         }
         document.getElementById('calendar_wrapper').append(div);
     }
 }
 function reloadCalendar(current_month,month_len,initial_day) {
     let date_elements = document.getElementsByClassName('date');
-    let outer = get_outer_Months(current_month,initial_day);
+    let outer = get_prev_Month(current_month);
 
     for (let i=0;i<date_elements.length; i++) {
         if (i>=initial_day && i<=month_len+initial_day-1) {
@@ -223,16 +221,16 @@ function reloadCalendar(current_month,month_len,initial_day) {
         }
         else if (i<initial_day) {
             date_elements[i].classList.add('date_hover');
-            date_elements[i].style.backgroundColor = 'red';
+            date_elements[i].style.backgroundColor = '#363737';
             date_elements[i].innerHTML = (i+outer[0]-initial_day+1).toString();
             if (date_elements[i].innerHTML === chosenDate) {
                 setDateColor(chosenDate);
             }
         }
         else {
-            date_elements[i].innerHTML = (i-43+10).toString();
+            date_elements[i].innerHTML = (i-month_len-initial_day+1).toString();
             date_elements[i].classList.add('date_hover');
-            date_elements[i].style.backgroundColor = 'red';
+            date_elements[i].style.backgroundColor = '#363737';
         }
     }
 }
