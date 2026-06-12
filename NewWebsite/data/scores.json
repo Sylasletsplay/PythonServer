@@ -1,82 +1,12 @@
 [
     {
-        "username": "HSK Sylas",
-        "score": 2100,
-        "time": 73.887
+        "username": "example_user",
+        "score": 1000,
+        "time": 60
     },
     {
-        "username": "HSK Sylas",
-        "score": 1650,
-        "time": 333.177
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 1550,
-        "time": 263.627
-    },
-    {
-        "username": "Gast",
-        "score": 325,
-        "time": 11.298
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 300,
-        "time": 117.149
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 300,
-        "time": 178.207
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 150,
-        "time": 153.615
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 100,
-        "time": 202.982
-    },
-    {
-        "username": "Gast",
-        "score": 100,
-        "time": 8.817
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 50,
-        "time": 102.871
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 50,
-        "time": 133.36
-    },
-    {
-        "username": "TestSylas",
-        "score": 50,
-        "time": 10.001
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 0,
-        "time": 124.696
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 0,
-        "time": 141.194
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 0,
-        "time": 187.084
-    },
-    {
-        "username": "HSK Sylas",
-        "score": 0,
-        "time": 340.894
+        "username": "example_user",
+        "score": 500,
+        "time": 45
     }
 ]
