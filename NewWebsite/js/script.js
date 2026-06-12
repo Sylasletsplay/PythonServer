@@ -1,5 +1,5 @@
 // Create WebSocket connection.
-const socket = new WebSocket("wss://10.31.5.37:443");
+const socket = new WebSocket("wss://10.31.5.22:443"); //TODO Server doesnt always have the same ip
 // Connection opened
 socket.addEventListener("open", (event) => {
     socket.send("Hello Server!");

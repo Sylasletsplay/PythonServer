@@ -540,7 +540,7 @@ function updatePlayerStats() {
 
 function savePlayerScore() {
     let playtime = (gameEndTime - gameStartTime) / 1000;
-    Username = 'Gast';
+    let Username = 'Gast';
     fetch('/verifyLogin', {
         method: 'POST',
         credentials: 'include'
@@ -865,4 +865,4 @@ function compare_arrays(a, b) {
 console.log("Starting");
 updatePlayerStats();
 const gameStartTime = Date.now();
-requestAnimationFrame(gameLoop);y
+requestAnimationFrame(gameLoop);

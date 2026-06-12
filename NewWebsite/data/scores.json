@@ -15,6 +15,11 @@
         "time": 263.627
     },
     {
+        "username": "Gast",
+        "score": 325,
+        "time": 11.298
+    },
+    {
         "username": "HSK Sylas",
         "score": 300,
         "time": 117.149
@@ -35,6 +40,11 @@
         "time": 202.982
     },
     {
+        "username": "Gast",
+        "score": 100,
+        "time": 8.817
+    },
+    {
         "username": "HSK Sylas",
         "score": 50,
         "time": 102.871
@@ -43,6 +53,11 @@
         "username": "HSK Sylas",
         "score": 50,
         "time": 133.36
+    },
+    {
+        "username": "TestSylas",
+        "score": 50,
+        "time": 10.001
     },
     {
         "username": "HSK Sylas",
@@ -58,5 +73,10 @@
         "username": "HSK Sylas",
         "score": 0,
         "time": 187.084
+    },
+    {
+        "username": "HSK Sylas",
+        "score": 0,
+        "time": 340.894
     }
 ]

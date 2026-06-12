@@ -29,7 +29,10 @@ except FileNotFoundError:
     exit()
 
 
-SERVERKEY = b'Umbreon4daw1n'
+config_path = os.path.join(BASE_DIR, 'config.local.json')
+with open(config_path) as f:
+    config = json.load(f)
+    SERVERKEY = config['server_key'].encode()
 
 # --- HELPER FUNCTIONS ---
 
@@ -182,15 +185,18 @@ def get_count_from_json(path,element_descriptor):
             diff_list[in_list.index(entry[element_descriptor])][1] += 1
     return diff_list
 
-def get_log_span():
-    for elements in os.walk(os.path.join(BASE_DIR, 'stat_logs')):
-        return elements[2][0], elements[2][-1]
-    return None
+def get_logs():
+    file_list = []
+    a = os.walk(os.path.join(BASE_DIR, 'stat_logs'))
+    for element in a:
+        for file in element[2]:
+            file = file.removesuffix('.json')
+            extracted_dates = file.split('_')
+            file_list.append([file, extracted_dates])
 
 def get_date_from_timestamp(timestamp_list):
     for timestamp in timestamp_list:
         date = datetime.datetime.fromtimestamp(timestamp[0])
-        print(date)
 
 def perform_handshake(client_socket, request):
     # Extract the WebSocket Key
@@ -221,12 +227,9 @@ def perform_handshake(client_socket, request):
 def decode_frame(frame):
     # assuming it's masked, hence removing the mask bit(MSB) to get len. also assuming len is <125
     payload_len = frame[1] - 128
-
     mask = frame[2:6]
     encrypted_payload = frame[6: 6 + payload_len]
-
     payload = bytearray([encrypted_payload[i] ^ mask[i % 4] for i in range(payload_len)])
-
     return payload
 
 # --- CLIENT HANDLER ---
@@ -235,7 +238,6 @@ def websocket_loop(sock):
     while True:
         data = decode_frame(sock.recv(4096))
         if not data: break
-        print(f"Received WS Message: {data}")
         send_frame(sock,json.dumps({"status": "success", "message": "Score submitted!"}).encode())
 
 def send_frame(self, payload):
@@ -287,13 +289,11 @@ def handle_client(secure_socket,client_address):
         method = first_line[0]
         path = first_line[1]
 
-        print(f"Request: {method} {path}")
 
         # Post Handel
         if method == 'POST':
             content_length = 0
             for line in headers_list:
-                print(line)
                 if line.lower().startswith("content-length:"):
                     content_length = int(line.split(':')[1].strip())
                 if line.lower().startswith('cookie'):
@@ -307,12 +307,11 @@ def handle_client(secure_socket,client_address):
                     username = post_data.get('username')
                     score = post_data.get('score')
                     time_data = post_data.get('time')
-                    print('Time Data: ', time_data)
                     if user_playtime is not None:
-                        pass
-                    time_data = time_data + int(user_playtime)
-                    print(f'The User {username} has {time_data} Seconds playtime')
-                    set_element_from_path(username,'username','playtime',user_file_path,time_data)
+                        time_data = time_data + int(user_playtime)
+                        set_element_from_path(username,'username','playtime',user_file_path,time_data)
+                    else:
+                        user_playtime = 0
                     scores = read_file(scores_file_path)
                     save_score(scores, username, score, time_data)
                     write_sort_file(scores_file_path, scores, 'score')
@@ -322,7 +321,6 @@ def handle_client(secure_socket,client_address):
                             f"Content-Length: {len(response_body)}\r\n\r\n"
                     secure_socket.sendall(header.encode() + response_body)
                 except Exception as e:
-                    print(f"POST Error: {e}")
                     secure_socket.sendall(b"HTTP/1.1 500 Internal Server Error\r\n\r\n")
             elif path == '/submitCredentials':
                 try:
@@ -449,7 +447,6 @@ def handle_client(secure_socket,client_address):
                         list_2.append(entry[1])
                     response_data = {'list': list_1, 'data': list_2, 'description': x_axis, 'chart_type': graph_type}
                     response_body = json.dumps(response_data).encode('utf-8')
-                    print(response_body)
                     header = "HTTP/1.1 200 OK\r\n" \
                              "Content-Type: application/json\r\n" \
                              f"Content-Length: {len(response_body)}\r\n" \
@@ -474,7 +471,7 @@ def handle_client(secure_socket,client_address):
                     secure_socket.sendall(b"HTTP/1.1 500 Server Error\r\n\r\n")
             secure_socket.close()
             return
-        #Get handeling
+        #Get handling
         elif method == 'GET':
             file_path = None
             content_type = 'text/plain'
@@ -566,7 +563,6 @@ def start_server():
     while True:
         try:
             raw_socket, client_address = server_socket.accept()
-
             # Wrap the socket for SSL
             try:
                 secure_socket = SSL_CONTEXT.wrap_socket(raw_socket, server_side=True)
@@ -574,8 +570,6 @@ def start_server():
                 print(f"SSL Handshake failed: {e}")
                 raw_socket.close()
                 continue
-
-            print(f" --- Accepted SECURE connection from: {client_address} ---")
 
             client_handler = threading.Thread(target=handle_client, args=(secure_socket,client_address))
             client_handler.start()
@@ -586,7 +580,8 @@ def start_server():
             print(f"Server Loop Error: {e}")
 
 if __name__ == "__main__":
-    get_log_span()
+    print('Log list: ')
+    get_logs()
     start_server()
 
 # TODO
