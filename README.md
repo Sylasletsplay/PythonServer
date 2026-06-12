@@ -32,7 +32,3 @@ A web server built with Python and JavaScript during an apprenticeship. Features
 2. Create a config file with your server key
 3. Place certificate files in the `NewWebsite` directory
 4. Run the server: `python NewWebsite/mainserver.py`
-
-## License
-
-MIT License - See LICENSE file for details
