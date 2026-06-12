@@ -1,14 +1,8 @@
 [
     {
-        "username": "HSK Sylas",
-        "password_hash": "$2b$12$54TC/CeN2wKm9BOQrTFex.qoKszS4qVM2dWwQqQQ4hKGDsJoeXZ8S",
-        "unique_id": "HSK Sylas482531",
-        "playtime": 340.894
-    },
-    {
-        "username": "TestSylas",
-        "password_hash": "$2b$12$LdZJCigcQpf.ffKB4EvGpuwR.vnM7Je/0C5WPp2/lzEM.5.plEqEa",
-        "unique_id": "TestSylas378068",
-        "playtime": 10.001
+        "username": "example_user",
+        "password_hash": "$2b$12$EXAMPLE_BCRYPT_HASH_HERE",
+        "unique_id": "example_user000000",
+        "playtime": 0
     }
 ]
