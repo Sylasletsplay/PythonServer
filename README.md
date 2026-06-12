@@ -17,7 +17,7 @@ A web server built with Python and JavaScript during an apprenticeship. Features
 - **Game** (`/bullethell`) - The bullet hell game
 - **Account** (`/Account`) - Login/registration page
 - **Leaderboard** (`/Leaderboard`) - View player scores
-- **Dashboard** (`/Dashboard`) - View gameplay statistics
+- **Dashboard** (`/Dashboard`) - View website statistics
 
 ## Tech Stack
 
