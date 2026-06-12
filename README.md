@@ -23,14 +23,8 @@ A web server built with Python and JavaScript during an apprenticeship. Features
 
 - **Backend**: Python (SSL socket server, authentication)
 - **Frontend**: HTML, CSS, JavaScript
-- **Security**: bcrypt password hashing, HMAC-SHA256 token signing
+- **Security**: bcrypt password hashing, HMAC-SHA256 token signing - MY PROJECT IS PROPABLY NOT ACTUALLY SAFE. OBVIOUSLY DON'T RELY ON MY PROJECT!
 - **Communication**: HTTPS, WebSocket support
-
-## Requirements
-
-- Python 3.x
-- SSL certificates (server.cert, server.key)
-- Dependencies: bcrypt
 
 ## Setup
 
